@@ -1,0 +1,22 @@
+header,
+footer {
+  display: grid;
+  place-items: center;
+  background-color: rebeccapurple;
+  color: #fff;
+}
+
+main {
+  //padding: 1rem;
+  //max-width: 80ch;
+  //margin: 0 auto;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+p {
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
