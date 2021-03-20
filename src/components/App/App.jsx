@@ -1,9 +1,13 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.scss';
 
 import Header from '../Header';
 import Footer from '../Footer';
+import TimeTrack from '../TimeTrack';
+import About from '../About';
+import Charts from '../Charts';
+import Works from '../Works';
 
 import { Toolbar } from 'primereact/toolbar';
 import {Button} from 'primereact/button';
@@ -66,7 +70,20 @@ function App() {
 
         <Toolbar left={leftContents} right={rightContents} />
 
-
+        <Switch>
+          <Route path='/works'>
+            <Works />
+          </Route>
+          <Route path='/charts'>
+            <Charts />
+          </Route>
+          <Route path='/about'>
+            <About />
+          </Route>
+          <Route path='/'>
+            <TimeTrack />
+          </Route>
+        </Switch>
 
 
       </main>
