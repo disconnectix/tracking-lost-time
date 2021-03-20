@@ -1,10 +1,14 @@
 import React from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import './App.scss';
+
+import Header from '../Header';
+import Footer from '../Footer';
 
 import { Toolbar } from 'primereact/toolbar';
+import {Button} from 'primereact/button';
+import {SplitButton} from 'primereact/splitbutton';
 
-import './App.scss';
-import {Button} from "primereact/button";
-import {SplitButton} from "primereact/splitbutton";
 
 
 const items = [
@@ -51,24 +55,25 @@ const rightContents = (
 
 function App() {
   return (
-    <React.Fragment>
-      <header>
-        <h1>Hello World</h1>
-      </header>
+    <Router>
+
+      <Header />
+
       <main>
-        <p>Marzipan bears biscuit dragée. Topping icing marshmallow. Soufflé gummies dessert jelly dessert liquorice.</p>
-        <p>Marzipan bears biscuit dragée. Topping icing marshmallow. Soufflé gummies dessert jelly dessert liquorice.</p>
-        <p>Marzipan bears biscuit dragée. Topping icing marshmallow. Soufflé gummies dessert jelly dessert liquorice.</p>
+        <p>Marzipan bears biscuit. Topping icing marshmallow. Dessert jelly dessert liquorice.</p>
+        <p>Marzipan bears biscuit. Topping icing marshmallow. Dessert jelly dessert liquorice.</p>
+        <p>Marzipan bears biscuit. Topping icing marshmallow. Dessert jelly dessert liquorice.</p>
 
         <Toolbar left={leftContents} right={rightContents} />
 
 
+
+
       </main>
-      <footer>
-        <p>&copy; ACME</p>
-        <p>&copy; ACME</p>
-      </footer>
-    </React.Fragment>
+
+      <Footer />
+
+    </Router>
   );
 }
 

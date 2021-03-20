@@ -1,0 +1,8 @@
+.header {
+  display: grid;
+  place-items: center;
+  background-color: rebeccapurple;
+  color: #fff;
+}
+
+/*# sourceMappingURL=Header.css.map */
