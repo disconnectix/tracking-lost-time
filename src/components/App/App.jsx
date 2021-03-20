@@ -1,7 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.scss';
 
+import Container from 'react-bootstrap/Container';
 import Header from '../Header';
 import Footer from '../Footer';
 import TimeTrack from '../TimeTrack';
@@ -10,8 +12,8 @@ import Charts from '../Charts';
 import Works from '../Works';
 
 import { Toolbar } from 'primereact/toolbar';
-import {Button} from 'primereact/button';
-import {SplitButton} from 'primereact/splitbutton';
+import { Button } from 'primereact/button';
+import { SplitButton } from 'primereact/splitbutton';
 
 
 
@@ -60,36 +62,37 @@ const rightContents = (
 function App() {
   return (
     <Router>
-
       <Header />
-
-      <main>
-        <p>Marzipan bears biscuit. Topping icing marshmallow. Dessert jelly dessert liquorice.</p>
-        <p>Marzipan bears biscuit. Topping icing marshmallow. Dessert jelly dessert liquorice.</p>
-        <p>Marzipan bears biscuit. Topping icing marshmallow. Dessert jelly dessert liquorice.</p>
-
-        <Toolbar left={leftContents} right={rightContents} />
-
-        <Switch>
-          <Route path='/works'>
-            <Works />
-          </Route>
-          <Route path='/charts'>
-            <Charts />
-          </Route>
-          <Route path='/about'>
-            <About />
-          </Route>
-          <Route path='/'>
-            <TimeTrack />
-          </Route>
-        </Switch>
+      <Container>
 
 
-      </main>
+        <main>
+          <p>Marzipan bears biscuit. Topping icing marshmallow. Dessert jelly dessert liquorice.</p>
+          <p>Marzipan bears biscuit. Topping icing marshmallow. Dessert jelly dessert liquorice.</p>
+          <p>Marzipan bears biscuit. Topping icing marshmallow. Dessert jelly dessert liquorice.</p>
 
+          <Toolbar left={leftContents} right={rightContents} />
+
+          <Switch>
+            <Route path='/works'>
+              <Works />
+            </Route>
+            <Route path='/charts'>
+              <Charts />
+            </Route>
+            <Route path='/about'>
+              <About />
+            </Route>
+            <Route path='/'>
+              <TimeTrack />
+            </Route>
+          </Switch>
+
+        </main>
+
+
+      </Container>
       <Footer />
-
     </Router>
   );
 }

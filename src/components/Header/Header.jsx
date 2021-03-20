@@ -1,149 +1,42 @@
 import React from 'react';
 import './Header.scss';
 
-import { Menubar } from 'primereact/menubar';
-import { InputText } from 'primereact/inputtext';
+import { NavLink } from 'react-router-dom';
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
+import Logo from '../Logo/Logo';
 
 const Header = () => {
-
-  const items = [
-    {
-      label: 'File',
-      icon: 'pi pi-fw pi-file',
-      items: [
-        {
-          label: 'New',
-          icon: 'pi pi-fw pi-plus',
-          items: [
-            {
-              label: 'Bookmark',
-              icon: 'pi pi-fw pi-bookmark'
-            },
-            {
-              label: 'Video',
-              icon: 'pi pi-fw pi-video'
-            },
-
-          ]
-        },
-        {
-          label: 'Delete',
-          icon: 'pi pi-fw pi-trash'
-        },
-        {
-          separator: true
-        },
-        {
-          label: 'Export',
-          icon: 'pi pi-fw pi-external-link'
-        }
-      ]
-    },
-    {
-      label: 'Edit',
-      icon: 'pi pi-fw pi-pencil',
-      items: [
-        {
-          label: 'Left',
-          icon: 'pi pi-fw pi-align-left'
-        },
-        {
-          label: 'Right',
-          icon: 'pi pi-fw pi-align-right'
-        },
-        {
-          label: 'Center',
-          icon: 'pi pi-fw pi-align-center'
-        },
-        {
-          label: 'Justify',
-          icon: 'pi pi-fw pi-align-justify'
-        },
-
-      ]
-    },
-    {
-      label: 'Users',
-      icon: 'pi pi-fw pi-user',
-      items: [
-        {
-          label: 'New',
-          icon: 'pi pi-fw pi-user-plus',
-
-        },
-        {
-          label: 'Delete',
-          icon: 'pi pi-fw pi-user-minus',
-
-        },
-        {
-          label: 'Search',
-          icon: 'pi pi-fw pi-users',
-          items: [
-            {
-              label: 'Filter',
-              icon: 'pi pi-fw pi-filter',
-              items: [
-                {
-                  label: 'Print',
-                  icon: 'pi pi-fw pi-print'
-                }
-              ]
-            },
-            {
-              icon: 'pi pi-fw pi-bars',
-              label: 'List'
-            }
-          ]
-        }
-      ]
-    },
-    {
-      label: 'Events',
-      icon: 'pi pi-fw pi-calendar',
-      items: [
-        {
-          label: 'Edit',
-          icon: 'pi pi-fw pi-pencil',
-          items: [
-            {
-              label: 'Save',
-              icon: 'pi pi-fw pi-calendar-plus'
-            },
-            {
-              label: 'Delete',
-              icon: 'pi pi-fw pi-calendar-minus'
-            }
-          ]
-        },
-        {
-          label: 'Archieve',
-          icon: 'pi pi-fw pi-calendar-times',
-          items: [
-            {
-              label: 'Remove',
-              icon: 'pi pi-fw pi-calendar-minus'
-            }
-          ]
-        }
-      ]
-    },
-    {
-      label: 'Quit',
-      icon: 'pi pi-fw pi-power-off'
-    }
-  ];
-
-  const start = <img alt="logo" src="showcase/images/logo.png" onError={(e) => e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} height="40" className="p-mr-2"></img>;
-  const end = <InputText placeholder="Search" type="text" />;
-
   return (
-    <div>
-      <div className="card">
-        <Menubar model={items} start={start} end={end} />
-      </div>
-    </div>
-  );
+    <Navbar collapseOnSelect expand='lg' bg='dark' variant='dark'>
+      <Navbar.Brand>
+        <NavLink to='/' exact className='header__link'>
+          <Logo />
+        </NavLink>
+      </Navbar.Brand>
+      <Navbar.Toggle aria-controls='responsive-navbar-nav' />
+      <Navbar.Collapse id='responsive-navbar-nav'>
+        <Nav className='ml-auto'>
+          <NavLink to='/' exact activeClassName='active' className='header__link'>
+            <i className="pi pi-image header__pi"/>
+            TimeTrack
+          </NavLink>
+          <NavLink to='/works' activeClassName='active' className='header__link'>
+            <i className="pi pi-th-large header__pi"/>
+            Works
+          </NavLink>
+          <NavLink to='/charts' activeClassName='active' className='header__link'>
+            <i className="pi pi-chart-bar header__pi"/>
+            Charts
+          </NavLink>
+          <NavLink to='/about' activeClassName='active' className='header__link'>
+            <i className="pi pi-id-card header__pi"/>
+            About
+          </NavLink>
+        </Nav>
+      </Navbar.Collapse>
+    </Navbar>
+  )
 }
 
 export default Header;

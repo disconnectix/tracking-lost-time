@@ -5,4 +5,37 @@
   color: #fff;
 }
 
+.p-menubar .p-menubar-custom, .p-menubar .p-menubar-end {
+  margin-left: 0;
+  align-self: center;
+}
+
+.header__link {
+  color: #c2c2c2;
+  margin: 0 1vmin;
+}
+
+.header__link:hover {
+  color: white;
+  text-decoration: none;
+}
+
+.header__link:focus {
+  color: white;
+  text-decoration: none;
+}
+
+.active {
+  color: white;
+  text-decoration: none;
+}
+
+.bg-dark {
+  background-color: #2a323d !important;
+}
+
+.header__pi {
+  margin: 1vmin;
+}
+
 /*# sourceMappingURL=Header.css.map */

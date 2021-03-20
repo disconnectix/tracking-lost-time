@@ -1,0 +1,22 @@
+.logo {
+  /*width: 40px;*/
+  height: clamp(30px, 5vw, 45px);
+}
+
+.logo-1 {
+  fill: #79c7e2;
+}
+
+.logo-2 {
+  fill: #f7899e;
+}
+
+.logo-3 {
+  fill: #ffca5f;
+}
+
+.logo-4 {
+  fill: #376782;
+}
+
+/*# sourceMappingURL=Logo.css.map */

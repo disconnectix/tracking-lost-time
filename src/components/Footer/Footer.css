@@ -1,8 +1,9 @@
 .footer {
   display: grid;
   place-items: center;
-  background-color: rebeccapurple;
+  background-color: #2a323d;
   color: #fff;
+  padding: 1.5rem 0;
 }
 
 p {
@@ -10,4 +11,4 @@ p {
   line-height: 1.5;
 }
 
-/*# sourceMappingURL=TimeTrack.css.map */
+/*# sourceMappingURL=Footer.css.map */

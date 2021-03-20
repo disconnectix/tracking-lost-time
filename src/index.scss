@@ -10,7 +10,11 @@
   min-width: 100vw;
   display: grid;
   grid-template-rows: auto 1fr auto;
+  background-color: #607d8b4a;
+}
 
+p {
+  margin-bottom: 0 !important;
 }
 
 
