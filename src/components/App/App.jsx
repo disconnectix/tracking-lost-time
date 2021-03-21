@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.scss';
 
 import Container from 'react-bootstrap/Container';
@@ -72,6 +71,9 @@ function App() {
           <p>Marzipan bears biscuit. Topping icing marshmallow. Dessert jelly dessert liquorice.</p>
 
           <Toolbar left={leftContents} right={rightContents} />
+
+
+
 
           <Switch>
             <Route path='/works'>

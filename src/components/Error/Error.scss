@@ -1,0 +1,14 @@
+.error {
+  color: indianred;
+  text-align: center;
+
+  &__header {
+    text-transform: uppercase;
+  }
+
+  &__message {
+    font-size: 2vmin;
+  }
+
+}
+

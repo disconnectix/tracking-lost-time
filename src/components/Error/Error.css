@@ -1,0 +1,12 @@
+.error {
+  color: indianred;
+  text-align: center;
+}
+.error__header {
+  text-transform: uppercase;
+}
+.error__message {
+  font-size: 2vmin;
+}
+
+/*# sourceMappingURL=Error.css.map */

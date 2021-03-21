@@ -1,0 +1,9 @@
+.dataIsEmpty {
+  color: #795548;
+  text-align: center;
+}
+.dataIsEmpty__message {
+  font-size: 3vmin;
+}
+
+/*# sourceMappingURL=DataIsEmpty.css.map */

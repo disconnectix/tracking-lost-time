@@ -1,0 +1,15 @@
+{
+  "port": 5000,
+  "jwtSecret": "",
+  "mongoUri": "",
+  "baseUrl": "http://localhost:5000",
+  "databaseSQL": {
+    "host": "remotemysql.com",
+    "user": "09OhAjwTap",
+    "password": "8IxnrlpJPw",
+    "database": "09OhAjwTap",
+    "waitForConnections": true,
+    "connectionLimit": 10,
+    "queueLimit": 0
+  }
+}

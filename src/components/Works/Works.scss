@@ -1,4 +1,53 @@
 .works {
-  color: #0d06f1;
+  margin: 0 150px;
+
+  &__header {
+
+  }
+
+  &__list {
+    max-width: 80vw;
+  }
+
+  &__item {
+    display: flex;
+    justify-content: space-around;
+    font-size: 2vmin;
+    margin: 1vmin 0;
+
+    transition: all 500ms linear;
+  }
+
+  &__id {
+    width: 10vw;
+    padding: 0 1vmin;
+    margin: 0 1vmin;
+  }
+
+  &__work {
+    width: 50vw;
+    padding: 0 1vmin;
+    margin: 0 1vmin;
+  }
+
+  &__bgColor {
+    width: 40vw;
+    padding: 0 1vmin;
+    margin: 0 1vmin;
+  }
+
+  &__change {
+    width: 3vmin;
+    height: 3vmin;
+    padding: 0 0.6vmin;
+    margin: 0 1vmin;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1032d0;
+    color: #ffffff;
+    border-radius: 5px;
+  }
+
 }
 
