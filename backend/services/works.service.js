@@ -19,7 +19,7 @@ const getAllWorksBackend = (req, res) => {
         // console.log(fields);
         if (err) {
           //возвращаем объект с ошибкой на фронт
-          res.status(500).json({ error: `500 : Query "SELECT * FROM works" ended with error : ${err}` })
+          res.status(500).json({ error: `*** ERROR-500 --> getAllWorksBackend : ${err}` })
         } else {
           worksBackend = results.map(w => ({
             id: w.id.toString(),
@@ -36,7 +36,7 @@ const getAllWorksBackend = (req, res) => {
     console.log('------------------- error catch getAllWorksBackend -----------------------');
     console.log(err);
     //возвращаем объект с ошибкой на фронт
-    res.status(500).json({ error: `500 : (catch) Query "SELECT * FROM works" ended with error : ${err}` })
+    res.status(500).json({ error: `*** ERROR-500 --> getAllWorksBackend (catch) : ${err}` })
   }
   // database.end();
 }
