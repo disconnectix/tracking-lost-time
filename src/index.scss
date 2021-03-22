@@ -7,10 +7,10 @@
 
 #root {
   min-height: 100vh;
-  min-width: 100vw;
+  min-width: 100%;
   display: grid;
   grid-template-rows: auto 1fr auto;
-  background-color: #607d8b4a;
+  background-color: #e3e3e3;
 }
 
 p {

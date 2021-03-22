@@ -126,24 +126,25 @@ const Works = () => {
             worksFrontend.map(w => (
               <li key={w.id} className='works__item'>
 
-                <span className='works__id' style={{backgroundColor: w.bgColor}}>{w.id}</span>
-                <span className='works__work' style={{backgroundColor: w.bgColor}}>{w.work}</span>
-                <span className='works__bgColor' style={{backgroundColor: w.bgColor}}>{w.bgColor}</span>
-
-                <ControlButton
-                  icon='pi pi-trash'
-                  classes='p-button-danger p-px-3 p-py-2 p-mr-2'
-                  controlHandler={() => deleteWorkFrontend(w.id)}
-                />
-
-                <NavLink exact={true} to={`/work/change/${w.id}`}>
+                <div className='works__info'>
+                  {/*<span className='works__id' style={{backgroundColor: w.bgColor}}>{w.id}</span>*/}
+                  <span className='works__bgColor' style={{backgroundColor: w.bgColor}}/>
+                  <span className='works__work'>{w.work}</span>
+                </div>
+                <div className='works__controls'>
                   <ControlButton
-                    icon='pi pi-pencil'
-                    classes='p-button-help p-px-3 p-py-2'
-                    controlHandler={() => {}}
+                    icon='pi pi-trash'
+                    classes='p-button-danger p-px-3 p-py-2 p-mr-2'
+                    controlHandler={() => deleteWorkFrontend(w.id)}
                   />
-                </NavLink>
-
+                  <NavLink exact={true} to={`/work/change/${w.id}`}>
+                    <ControlButton
+                      icon='pi pi-pencil'
+                      classes='p-button-help p-px-3 p-py-2'
+                      controlHandler={() => {}}
+                    />
+                  </NavLink>
+                </div>
               </li>
             ))
           }

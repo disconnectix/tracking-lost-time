@@ -62,7 +62,7 @@ function App() {
   return (
     <Router>
       <Header />
-      <Container>
+      {/*<Container>*/}
 
 
         <main>
@@ -93,7 +93,7 @@ function App() {
         </main>
 
 
-      </Container>
+      {/*</Container>*/}
       <Footer />
     </Router>
   );
