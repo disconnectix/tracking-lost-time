@@ -3,7 +3,9 @@
   margin: 0 auto;
 
   &__header {
-
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
   }
 
   &__list {

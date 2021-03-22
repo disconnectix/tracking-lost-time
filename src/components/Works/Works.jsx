@@ -12,7 +12,7 @@ import { request } from '../../utils/utils';
 //1) переместить функцию request в utils.js
 //2) экспортировать её сюда и проверить работу
 //3) переписать useEffect с использованием этой функции
-//TODO : 4) id успешно отправлен на сервер 3033, выведен в консоль, сделать запрос к БД
+//TODO : 4) id успешно отправлен на сервер 5000, выведен в консоль, сделать запрос к БД
 //TODO : 5) получить ответ от БД, обработать и отправить на фронт
 //TODO : 6) фронт : получить ответ от сервера, обработать и принять решение о перерендере списка
 
@@ -102,16 +102,17 @@ const Works = () => {
 
   return (
     <section className='works'>
-      <h1 className='works__header'>Works</h1>
 
-      <NavLink exact={true} to={`/work/insert`}>
-        <ControlButton
-          icon='pi pi-plus'
-          classes='p-button-danger p-px-4 p-py-3'
-          controlHandler={() => {}}
-        />
-      </NavLink>
-
+      <div className='works__header'>
+        <h1 className='works__title'>Works</h1>
+        <NavLink exact={true} to={`/work/insert`}>
+          <ControlButton
+            icon='pi pi-plus'
+            classes='p-button-danger p-px-4 p-py-3'
+            controlHandler={() => {}}
+          />
+        </NavLink>
+      </div>
 
       {/*<Switch>*/}
       {/*  <Route exact={true} path={'/works/:id'} component={ ChangeWork } />*/}
