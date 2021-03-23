@@ -22,65 +22,9 @@ database.getConnection(err => {
     console.log('+++ The connection to the MySQL backend is successfully... Ok!');
 })
 
-// const works = [
-//   {id: '1', work: '1111111', bgColor: '#025F34'},
-//   {id: '2', work: '2222222', bgColor: '#525F34'},
-//   {id: '3', work: '3333333', bgColor: '#925F34'},
-//   {id: '4', work: '4444444', bgColor: '#A25F34'},
-//   {id: '5', work: '5555555', bgColor: '#F25F34'},
-// ]
-
-
-
-
-// app.get('/api/works', (req, res) => {
-//   try {
-//
-//      let worksBackend = [];
-//      console.log('------------------- worksBackend -- step 1 -----------------------');
-//      console.log(worksBackend);
-//
-//      // запрос к БД
-//      database.query(`SELECT * FROM works`,
-//      (err, results, fields) => {
-//         //err = ошибка
-//         console.log('------------------- err ----------------------');
-//         console.log(err);
-//         //results = ответ от БД
-//         console.log('------------------- results -----------------------');
-//         console.log(results);
-//         // мета-данные полей
-//         // console.log(fields);
-//         if (err) {
-//           //возвращаем объект с ошибкой на фронт
-//           res.status(500).json({ error: `500 : Query "SELECT * FROM works" ended with error : ${err}` })
-//         } else {
-//           worksBackend = results.map(w => ({
-//             id: w.id.toString(),
-//             work: w.work,
-//             bgColor: w.bgcolor
-//           }));
-//           console.log('------------------- worksBackend -- step 2 -----------------------');
-//           console.log(worksBackend);
-//           //возвращаем обработанный массив на фронт
-//           res.status(200).json(worksBackend);
-//         }
-//       })
-//
-//     // console.log(works);
-//     // await res.status(200).json(workss)
-//     // await res.status(200).json(works)
-//   } catch (error) {
-//     console.log(error);
-//     res.status(400).json({message: `*** Error app.get to "/api/works" : ${error}`})
-//   }
-// })
-
-
 // app.use(express.static(path.resolve(__dirname, './public')));
 // app.use(express.static(path.resolve(__dirname, './build')));
 // app.use(express.static(path.resolve(__dirname)));
-
 
 if (process.env.NODE_ENV === 'production') {
   app.use('/', express.static(path.join(__dirname, 'build')));

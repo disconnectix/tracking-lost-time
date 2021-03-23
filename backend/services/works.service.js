@@ -9,17 +9,14 @@ const getAllWorksBackend = (req, res) => {
     // запрос к БД
     database.query(`SELECT * FROM works`,
       (err, results, fields) => {
-        //err = ошибка
         console.log('------------------- err ----------------------');
         console.log(err);
-        //results = ответ от БД
-        console.log('------------------- results -----------------------');
+        console.log('------------------- results -- ответ от БД ---');
         console.log(results);
-        // мета-данные полей
-        // console.log(fields);
+        // console.log(fields);// мета-данные полей
         if (err) {
           //возвращаем объект с ошибкой на фронт
-          res.status(500).json({ error: `*** ERROR-500 --> getAllWorksBackend : ${err}` })
+          res.status(500).json({ error: `*** ERROR-500 --> getAllWorksBackend (try) : ${err}` })
         } else {
           worksBackend = results.map(w => ({
             id: w.id.toString(),
@@ -41,43 +38,41 @@ const getAllWorksBackend = (req, res) => {
   // database.end();
 }
 
-// const removeWorkBackend = (req, res) => {
-//   console.log('worksService -- removeWorkBackend -- req.params');
-//   console.log(req.params);
-//   console.log(req.params.id);
-//
-//   const {id} = req.params;
-//
-//   try {
-//     // запрос к БД
-//     database.query(`DELETE FROM works WHERE id=${id}`,
-//       (err, results, fields) => {
-//         //err = ошибка
-//         console.log('------------------- err ----------------------');
-//         console.log(err);
-//         //results = ответ от БД
-//         console.log('------------------- results -----------------------');
-//         console.log(results);
-//         // мета-данные полей
-//         // console.log(fields);
-//         if (err) {
-//           //возвращаем объект с ошибкой на фронт
-//           res.status(500).json({ error: `500 : Query "DELETE FROM works WHERE id=${id}" ended with error : ${err}` })
-//         } else {
-//           //возвращаем результат на фронт
-//           res.status(200).json({
-//             id,
-//             message: `Work with id=${id} has been removed!`
-//           })
-//         }
-//       })
-//   } catch (err) {
-//     console.log('------------------- error catch removeWorkBackend -----------------------');
-//     console.log(err);
-//     //возвращаем объект с ошибкой на фронт
-//     res.status(500).json({ error: `500 : (catch) Query "DELETE FROM works WHERE id=${id}" ended with error : ${err}` })
-//   }
-// }
+const removeWorkBackend = (req, res) => {
+  console.log('worksService -- removeWorkBackend -- req.params');
+  console.log(req.params);
+  console.log(req.params.id);
+
+  const {id} = req.params;
+
+  try {
+    // запрос к БД
+    database.query(`DELETE FROM works WHERE id=${id}`,
+      (err, results, fields) => {
+        console.log('------------------- err ----------------------');
+        console.log(err);
+        console.log('------------------- results -- ответ от БД ----');
+        console.log(results);
+        // мета-данные полей
+        // console.log(fields);
+        if (err) {
+          //возвращаем объект с ошибкой на фронт
+          res.status(500).json({ error: `*** ERROR-500 --> removeWorkBackend (try) : ${err}` })
+        } else {
+          //возвращаем результат на фронт
+          res.status(200).json({
+            id,
+            message: `Work with id=${id} has been removed!`
+          })
+        }
+      })
+  } catch (err) {
+    console.log('------------------- error catch removeWorkBackend -----------------------');
+    console.log(err);
+    //возвращаем объект с ошибкой на фронт
+    res.status(500).json({ error: `*** ERROR-500 --> removeWorkBackend (catch) : ${err}` })
+  }
+}
 
 // const getWorkBackend = (req, res) => {
 //   console.log('worksService -- getWorkBackend -- req.params');
@@ -273,7 +268,7 @@ const getAllWorksBackend = (req, res) => {
 
 
 // module.exports = { getAllWorksBackend, removeWorkBackend, getWorkBackend, updateWorkBackend, insertWorkBackend }
-module.exports = { getAllWorksBackend }
+module.exports = { getAllWorksBackend, removeWorkBackend }
 
 /**
  *  let CONTACTS = [];

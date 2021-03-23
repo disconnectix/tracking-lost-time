@@ -5,7 +5,6 @@ import './Works.scss';
 import Loader from '../Loader';
 import Error from '../Error';
 import DataIsEmpty from '../DataIsEmpty';
-import ControlButton from '../ControlButton';
 import { request } from '../../utils/utils';
 import {DeleteButton, EditButton, InsertButton} from '../Buttons/Buttons';
 
@@ -55,8 +54,11 @@ const Works = () => {
 
   const deleteWorkFrontend = async (id) => {
     console.log(`...delete work[${id}]`);
-
     try {
+
+      //TODO :::
+      //TODO Переспросить пользователя об удалении элемента справочника
+
       // запрос к серверу
       const serverResponse = await request(`/api/works/${id}`, 'DELETE');
       //ответ от сервера
@@ -68,26 +70,14 @@ const Works = () => {
       //TODO : распарсить ответ от сервера и
       //TODO : 1) если получена ошибка - вывести ошибку
       //2) если ошибок нет - перерисовать компонент с удаленным work
-
       //TODO : 3) в css не работает transition, использовать react-transition... ???
-
 
       let works = worksFrontend.filter(elem => elem.id !== serverResponse.id)
       setWorksFrontend(works);
-
     } catch (err) {
       setErrorMessage(`Works --> deleteWorkFrontend --> ${err}`);
     }
-
   }
-
-  /**
-   * async removeContact(id) {
-      await request(`/api/contacts/${id}`, 'DELETE')
-      this.contacts = this.contacts.filter(c => c.id !== id);
-      }
-   },
-   * **/
 
   if (isLoading) {
     return (
