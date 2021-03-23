@@ -7,6 +7,7 @@ import Error from '../Error';
 import DataIsEmpty from '../DataIsEmpty';
 import ControlButton from '../ControlButton';
 import { request } from '../../utils/utils';
+import {DeleteButton, EditButton, InsertButton} from '../Buttons/Buttons';
 
 //TODO :::
 //1) переместить функцию request в utils.js
@@ -106,11 +107,7 @@ const Works = () => {
       <div className='works__header'>
         <h1 className='works__title'>Works</h1>
         <NavLink exact={true} to={`/work/insert`}>
-          <ControlButton
-            icon='pi pi-plus'
-            classes='p-button-danger p-px-4 p-py-3'
-            controlHandler={() => {}}
-          />
+          <InsertButton/>
         </NavLink>
       </div>
 
@@ -133,18 +130,12 @@ const Works = () => {
                   <span className='works__work'>{w.work}</span>
                 </div>
                 <div className='works__controls'>
-                  <ControlButton
-                    icon='pi pi-trash'
-                    classes='p-button-danger p-px-3 p-py-2 p-mr-2'
+                  <NavLink exact={true} to={`/work/change/${w.id}`}>
+                    <EditButton/>
+                  </NavLink>
+                  <DeleteButton
                     controlHandler={() => deleteWorkFrontend(w.id)}
                   />
-                  <NavLink exact={true} to={`/work/change/${w.id}`}>
-                    <ControlButton
-                      icon='pi pi-pencil'
-                      classes='p-button-help p-px-3 p-py-2'
-                      controlHandler={() => {}}
-                    />
-                  </NavLink>
                 </div>
               </li>
             ))

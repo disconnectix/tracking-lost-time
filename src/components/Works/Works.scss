@@ -5,6 +5,7 @@
   &__header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin: 10px 0;
   }
 
@@ -60,12 +61,43 @@
   }
 
   &__controls {
-    width: 12vw;
+    width: 10rem;
     /* padding: 0 1vmin; */
     margin: 0 1vmin;
     display: flex;
     justify-content: space-around;
   }
 
+
+}
+
+@media only screen and (max-width: 991px) {
+  .works {
+    max-width: 80vw;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+    .works {
+
+      &__item {
+        display: block;
+      }
+
+      &__controls {
+        width: unset;
+        justify-content: flex-end;
+      }
+
+      &__del {
+        margin-left: 1rem;
+      }
+    }
+  }
+
+@media only screen and (max-width: 521px) {
+  .works {
+    max-width: 100%;
+  }
 }
 

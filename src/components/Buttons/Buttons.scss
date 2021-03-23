@@ -1,3 +1,72 @@
 .buttons__svg {
-  width: 24px;
+  width: 22px;
 }
+
+.b-insert {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  height: 50px;
+  border-radius: 4px;
+  font-size: calc(16px + 1vmin);
+  font-weight: 300;
+  padding: 1rem 1rem;
+  color: #444444;
+  background: #f19ea6;
+  border: 1px solid #e97984;
+  transition: all 200ms linear;
+}
+
+.b-insert:hover {
+  background: #e97984;
+  color: #151515;
+  border-color: #f75965;
+}
+
+.b-delete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 4px;
+  color: #151515;
+  background: #f19ea6;
+  border: 1px solid #e97984;
+  transition: all 200ms linear;
+  width: 40px;
+  height: 40px;
+}
+
+.b-delete:hover {
+  background: #e97984;
+  color: #151515;
+  border-color: #f75965;
+}
+
+@media only screen and (max-width: 768px) {
+  .b-delete {
+      margin-left: 1rem;
+    }
+  }
+
+
+.b-edit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 4px;
+  color: #151515;
+  background: #b7a2e0;
+  border: 1px solid #9a7cd4;
+  transition: all 200ms linear;
+  width: 40px;
+  height: 40px;
+}
+
+.b-edit:hover {
+  background: #9a7cd4;
+  color: #151515;
+  border-color: #845fca;}
+

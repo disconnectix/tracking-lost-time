@@ -13,6 +13,7 @@ import Works from '../Works';
 import { Toolbar } from 'primereact/toolbar';
 import { Button } from 'primereact/button';
 import { SplitButton } from 'primereact/splitbutton';
+import NotFound from '../NotFound';
 
 
 
@@ -87,6 +88,9 @@ function App() {
             </Route>
             <Route path='/'>
               <TimeTrack />
+            </Route>
+            <Route path='*'>
+              <NotFound/>
             </Route>
           </Switch>
 
