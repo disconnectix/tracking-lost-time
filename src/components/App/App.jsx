@@ -10,6 +10,8 @@ import About from '../About';
 import Charts from '../Charts';
 import Works from '../Works';
 import NotFound from '../NotFound';
+import InsertWork from '../InsertWork';
+import ChangeWork from '../ChangeWork';
 
 function App() {
   return (
@@ -24,13 +26,21 @@ function App() {
             <Route path='/works'>
               <Works />
             </Route>
+
+            <Route exact path='/work/insert'>
+              <InsertWork />
+            </Route>
+            <Route exact path='/work/change/:id'>
+              <ChangeWork />
+            </Route>
+
             <Route path='/charts'>
               <Charts />
             </Route>
             <Route path='/about'>
               <About />
             </Route>
-            <Route path='/'>
+            <Route exact path='/'>
               <TimeTrack />
             </Route>
             <Route path='*'>

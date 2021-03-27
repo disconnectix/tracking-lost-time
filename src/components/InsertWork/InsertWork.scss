@@ -1,0 +1,54 @@
+.changeWork {
+  max-width: 75vmin;
+  margin: 0 auto;
+
+  &__label {
+    font-size: calc(14px + 0.5vmin);
+  }
+
+  &__work {
+    width: 100%;
+  }
+
+  .p-inputtext{
+    font-size: calc(14px + 0.5vmin);
+  }
+
+  .p-colorpicker-preview.p-inputtext {
+    font-size: calc(14px + 0.5vmin);
+    width: 100%;
+    height: 46px;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__color {
+  }
+
+  &__submit {
+    max-width: 10rem;
+    margin: 4rem auto 0;
+  }
+
+  &__color input::-moz-placeholder {
+    color: #000000;
+  }
+  &__color input::-webkit-input-placeholder {
+    color: #000000;
+  }
+  &__color input::-ms-input-placeholder {
+    color: #000000;
+  }
+  &__color input:-ms-input-placeholder {
+    color: #000000;
+  }
+  &__color input::-moz-placeholder {
+    color: #000000;
+  }
+  &__color input::placeholder {
+    color: #000000;
+  }
+}

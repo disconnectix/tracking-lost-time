@@ -6,7 +6,7 @@ import Loader from '../Loader';
 import Error from '../Error';
 import DataIsEmpty from '../DataIsEmpty';
 import { request } from '../../utils/utils';
-import {DeleteButton, EditButton, InsertButton} from '../Buttons/Buttons';
+import { DeleteButton, EditButton, InsertButton } from '../Buttons/Buttons';
 
 //TODO :::
 //1) переместить функцию request в utils.js

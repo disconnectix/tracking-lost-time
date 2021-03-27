@@ -5,12 +5,11 @@ const worksRouter = Router();
 
 worksRouter.get('/api/works', getAllWorksBackend);
 worksRouter.delete('/api/works/:id', removeWorkBackend);
+worksRouter.post('/api/work/insert', insertWorkBackend);
 
-// worksRouter.get('/api/work/:id', getWorkBackend);
-//
-// worksRouter.post('/api/work/change/:id', updateWorkBackend);
-//
-// worksRouter.post('/api/work/insert', insertWorkBackend);
+worksRouter.get('/api/work/:id', getWorkBackend);
+worksRouter.post('/api/work/change/:id', updateWorkBackend);
+
 
 
 
