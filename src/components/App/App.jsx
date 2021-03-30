@@ -23,15 +23,15 @@ function App() {
         <main>
 
           <Switch>
-            <Route path='/works'>
-              <Works />
-            </Route>
 
             <Route exact path='/work/insert'>
               <InsertWork />
             </Route>
             <Route exact path='/work/change/:id'>
               <ChangeWork />
+            </Route>
+            <Route path='/works'>
+              <Works />
             </Route>
 
             <Route path='/charts'>
@@ -46,6 +46,7 @@ function App() {
             <Route path='*'>
               <NotFound/>
             </Route>
+
           </Switch>
 
         </main>

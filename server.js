@@ -1,10 +1,11 @@
 const express = require('express');
-const cors = require('cors');
 const path = require('path');
+const cors = require('cors');
 
 const { database } = require('./database/database.js');
 
 const { worksRouter } = require('./backend/routes/works.router.js');
+const { timetrackRouter } = require('./backend/routes/timetrack.router.js');
 
 //web-backend -- создаем web-backend с помощью библиотеки express
 const app = express();
@@ -12,6 +13,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.use(timetrackRouter);
 app.use(worksRouter);
 
 database.getConnection(err => {
