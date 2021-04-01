@@ -13,10 +13,10 @@ const getTimetrackDateBackend = (req, res) => {
     // database.query(`SELECT * FROM works WHERE id = ${id}`,
     //   (err, results, fields) => {
     //     //err = ошибка
-    //     console.log('------------------- err ----------------------');
+    //     console.log('------------------- getTimetrackDateBackend --> err :');
     //     console.log(err);
     //     //results = ответ от БД
-    //     console.log('------------------- results -----------------------');
+    //     console.log('------------------- getTimetrackDateBackend --> results :');
     //     console.log(results);
     //     // мета-данные полей
     //     // console.log(fields);
@@ -40,7 +40,7 @@ const getTimetrackDateBackend = (req, res) => {
     //     }
     //   })
   } catch (err) {
-    console.log('------------------- error catch getTimetrackDateBackend -----------------------***');
+    console.log('------------------- error catch getTimetrackDateBackend :');
     console.log(err);
     //возвращаем объект с ошибкой на фронт
     res.status(500).json({ error: `*** ERROR-500 --> getTimetrackDateBackend (catch) : ${err}` })
