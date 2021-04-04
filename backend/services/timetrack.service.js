@@ -1,56 +1,226 @@
 const { database } = require('../../database/database.js');
+const { defaultRecord } = require('../../src/components/TimeTrack/defaultRecord.js');
 
 const getTimetrackDateBackend = (req, res) => {
-  console.log('timetrack.service -- getTimetrackDateBackend -- req.params');
-  console.log(req.params);
-  console.log(req.params.date);
+  console.log(`timetrack.service -- getTimetrackDateBackend -- req.body : `);
 
-  const { date } = req.params;
+  //TODO ::: в req.body жду с фронта объект примерно такого вида :
+  //TODO ... { "data" : "20210331" }
+
+    console.log(req.body);
+
+    const { date } = req.body;
+
+    console.log(date);
 
   try {
     let timetrackBackend = {};
-    // // запрос к БД
-    // database.query(`SELECT * FROM works WHERE id = ${id}`,
-    //   (err, results, fields) => {
-    //     //err = ошибка
-    //     console.log('------------------- getTimetrackDateBackend --> err :');
-    //     console.log(err);
-    //     //results = ответ от БД
-    //     console.log('------------------- getTimetrackDateBackend --> results :');
-    //     console.log(results);
-    //     // мета-данные полей
-    //     // console.log(fields);
-    //     if (err) {
-    //       //возвращаем объект с ошибкой на фронт
-    //       res.status(500).json({ error: `*** ERROR-500 --> getTimetrackDateBackend (try) : ${err}` })
-    //     } else {
-    //       workBackend.id = results[0].id.toString();
-    //       workBackend.work = results[0].work;
-    //       workBackend.bgColor = results[0].bgcolor;
+    // запрос к БД
+    database.query(`SELECT * FROM timetrack WHERE date = ${date}`,
+      (err, results, fields) => {
+        if (err) {
+          //возвращаем объект с ошибкой на фронт
+          res.status(500).json({ error: `*** ERROR-500 --> getTimetrackDateBackend (try) : ${err}` })
+        } else {
+        if (!results[0]) {
 
-    timetrackBackend.date = date;
+          //TODO :::
+          //+ если results[0] === undefined...
+          //+ ...значит ответ сервера пуст, т е указанная в запросе дата не содержится в БД...
+          //+ ...значит надо создать запись в БД...
+          //+ ...содержащую эту запись с дефолтным заполнением полей...
+          //+ ...получить от БД подтверждение о создании этой записи...
+          //+ ... и вернуть результат на фронт
+
+          const sqlQuery = `INSERT INTO timetrack (date) VALUES ('${date}')`;
+
+          console.log('************* sqlQuery ************** ');
+          console.log(sqlQuery);
+
+          //запрос к БД
+          database.query(sqlQuery,
+            (err, results, fields) => {
+              //results = ответ от БД
+              console.log('------------------- results insert -----------------------');
+              console.log(results);
+              if (err) {
+                console.log('------------------- err insert ----------------------');
+                console.log(err);
+                //возвращаем объект с ошибкой на фронт
+                res.status(500).json({ error: `*** ERROR-500 --> getTimetrackDateBackend (insert) : ${err}` })
+              } else {
+                console.log('INSERT success!!!--------------------');
+                console.log({...defaultRecord, id: results.insertId, date});
+                //возвращаем обработанный объект на фронт
+                res.status(200).json({
+                  ...defaultRecord,
+                  id: results.insertId,
+                  date,
+                });
+              }
+            })
+        } else {
+          timetrackBackend = results[0];
+          //results = ответ от БД
+          console.log('------------------- getTimetrackDateBackend --> results[0] :');
+          console.log(results[0]);
           //возвращаем обработанный объект на фронт
           res.status(200).json(timetrackBackend);
-    //
-    //       //проверка загрузки
-    //       // setTimeout(() => {
-    //       //   res.status(200).json(workBackend);
-    //       // }, 3000)
-    //
-    //     }
-    //   })
+        }
+      }
+    })
   } catch (err) {
     console.log('------------------- error catch getTimetrackDateBackend :');
     console.log(err);
     //возвращаем объект с ошибкой на фронт
     res.status(500).json({ error: `*** ERROR-500 --> getTimetrackDateBackend (catch) : ${err}` })
   }
-  // database.end();
+}
+
+const updateTimetrackBackend = (req, res) => {
+  console.log(`timetrack.service -- updateTimetrackBackend -- req.body : `);
+  console.log(req.body);
+  console.log(`timetrack.service -- updateTimetrackBackend -- req.params : `);
+  console.log(req.params);
+  console.log(req.params.date);
+
+  const date = req.params.date;
+  // const { work, bgColor, method } = req.body;
+
+  //TODO :::
+  //TODO Протестировать запрос UPDATE в БД
+
+  // UPDATE `works` SET `work`='eat2',`bgcolor`='#ff3302' WHERE id = 11
+
+  try {
+
+    let setPart = ``;
+
+    for (const [key, value] of Object.entries(req.body)) {
+      setPart += `${key}='${value}', `;
+    }
+
+    setPart = setPart.trimEnd().slice(0, -1);
+    console.log(setPart);
+
+    let sqlQuery = ``;
+
+    if (setPart) {
+      sqlQuery = `UPDATE timetrack SET `;
+      sqlQuery += setPart;
+      sqlQuery += ` WHERE date='${date}'`;
+    } else {
+      res.status(500).json({ error: `*** ERROR-500 --> updateTimetrackBackend (query) : req.body is EMPTY` })
+    }
+
+    console.log('************* sqlQuery UPDATE ************** ');
+    console.log(sqlQuery);
+
+    // запрос к БД
+    database.query(sqlQuery,
+      (err, results, fields) => {
+        //err = ошибка
+        console.log('------------------- err 1 ----------------------');
+        console.log(err);
+        //results = ответ от БД
+        console.log('------------------- results 1 -----------------------');
+        console.log(results);
+        if (err) {
+          //возвращаем объект с ошибкой на фронт
+          res.status(500).json({ error: `*** ERROR-500 --> updateTimetrackBackend (try) : ${err}` })
+        } else {
+          // workBackend.id = results[0].id.toString();
+          // workBackend.work = results[0].work;
+          // workBackend.bgColor = results[0].bgcolor;
+          // workBackend.bgColor = '#88b4b4';
+
+          //возвращаем обработанный объект на фронт
+          res.status(200).json({
+            date: req.params.date,
+            message: `UPDATE : '${req.params.date}' --> is success!`,
+            error: null,
+            result: 'SUCCESS'
+          });
+        }
+      })
+  } catch (err) {
+    console.log('------------------- error catch updateTimetrackBackend 1 -----------------------');
+    console.log(err);
+    //возвращаем объект с ошибкой на фронт
+    res.status(500).json({ error: `*** ERROR-500 --> updateTimetrackBackend (catch) : ${err}` })
+  }
+}
+
+const getTimetrackIntervalBackend = (req, res) => {
+  console.log(`timetrack.service -- getTimetrackIntervalBackend -- req.body : `);
+
+  //TODO ::: в req.body жду с фронта объект примерно такого вида :
+  //TODO ... { "dateBegin" : "20210331", "dateEnd" : "20210401" }
+
+  console.log(req.body);
+
+  const { dateBegin, dateEnd } = req.body;
+
+  console.log(dateBegin);
+  console.log(dateEnd);
+
+
+  // SELECT * FROM `timetrack` WHERE date >= '20210331' AND date <= '20210401'
+
+  try {
+    let timetrackBackend = [];
+    // запрос к БД
+    database.query(`SELECT * FROM timetrack WHERE date >= '${dateBegin}' AND date <= '${dateEnd}'`,
+      (err, results, fields) => {
+        if (err) {
+          //возвращаем объект с ошибкой на фронт
+          res.status(500).json({ error: `*** ERROR-500 --> getTimetrackIntervalBackend (try) : ${err}` })
+        } else {
+          if (!results.length) {
+
+            console.log(`INTERVAL : ['${dateBegin}' : '${dateEnd}'] not found!`);
+            console.log(results.length);
+            console.log(results);
+
+            res.status(500).json({
+              dateBegin,
+              dateEnd,
+              message: `INTERVAL : ['${dateBegin}' : '${dateEnd}'] not found!`,
+              error: true,
+              result: 'ERROR'
+            });
+
+
+          } else {
+
+
+            //results = ответ от БД
+            console.log('------------------- getTimetrackIntervalBackend --> results :');
+            console.log(results);
+            console.log('Array.isArray(results) ***');
+            console.log(Array.isArray(results));
+
+            //TODO ::: лучше возвращать results ? *********************************************************************
+
+            timetrackBackend = results;
+
+            //возвращаем обработанный объект на фронт
+            res.status(200).json(timetrackBackend);
+          }
+        }
+      })
+  } catch (err) {
+    console.log('------------------- error catch getTimetrackIntervalBackend :');
+    console.log(err);
+    //возвращаем объект с ошибкой на фронт
+    res.status(500).json({ error: `*** ERROR-500 --> getTimetrackIntervalBackend (catch) : ${err}` })
+  }
 }
 
 
-module.exports = { getTimetrackDateBackend  }
 
+
+module.exports = { getTimetrackDateBackend, updateTimetrackBackend, getTimetrackIntervalBackend  }
 //module.exports = { getAllWorksBackend, removeWorkBackend, insertWorkBackend, getWorkBackend, updateWorkBackend  }
 
 
@@ -253,10 +423,10 @@ module.exports = { getTimetrackDateBackend  }
   // database.end();
 }
 
- const insertWorkBackend = (req, res) => {
+ // const insertTimetrackBackend = (req, res) => {
 
   // const id = req.params.id;
-  const { work, bgColor, method } = req.body;
+  // const { work, bgColor, method } = req.body;
 
   //TODO :::
   //TODO Протестировать запрос в БД
@@ -264,64 +434,54 @@ module.exports = { getTimetrackDateBackend  }
   // UPDATE `works` SET `work`='eat2',`bgcolor`='#ff3302' WHERE id = 11
 
 
-  try {
-    console.log('worksService -- insertWorkBackend --> ');
-    console.log(req.body);
+  // try {
+  //   console.log('timetrack.service -- insertTimetrackBackend --> ');
+  //
+  //   //TODO ::: в req.body жду с фронта объект примерно такого вида :
+  //   //TODO ... { "data" : "20210331" }
+  //
+  //   console.log(req.body);
+  //
+  //   const { date } = req.body;
+  //
+  //   console.log(date);
 
-    // console.log(req.params);
-    // console.log(req.params.id);
-
-    // console.log(req.body.id);
-    console.log(req.body.work);
-    console.log(req.body.bgColor);
-
-    let sqlQuery = ``;
-
-    // if (method === 'UPDATE') {
-    //   sqlQuery = `UPDATE works SET `;
-    //   if (work) { sqlQuery += `work='${work}',`}
-    //   if (bgColor) { sqlQuery += ` bgcolor='${bgColor}' `}
-    //   sqlQuery += `WHERE id=${id}`;
-    //   // sqlQuery += `WHERE id=${id}`;
-    // }
-
-    sqlQuery = `INSERT INTO works (work, bgcolor) VALUES ('${work}', '${bgColor}')`;
-
-    console.log('************* sqlQuery 2 ************** ');
-    console.log(sqlQuery);
+    // const sqlQuery = `INSERT INTO works (work, bgcolor) VALUES ('${work}', '${bgColor}')`;
+    //
+    // console.log('************* sqlQuery 2 ************** ');
+    // console.log(sqlQuery);
 
     // запрос к БД
-    database.query(sqlQuery,
-      (err, results, fields) => {
-        //err = ошибка
-        console.log('------------------- err 2 ----------------------');
-        console.log(err);
-        //results = ответ от БД
-        console.log('------------------- results 2 -----------------------');
-        console.log(results);
-        // мета-данные полей
-        // console.log(fields);
-        if (err) {
-          //возвращаем объект с ошибкой на фронт
-          res.status(500).json({ error: `*** ERROR-500 --> insertWorkBackend (try) : ${err}` })
-        } else {
-          // workBackend.id = results[0].id.toString();
-          // workBackend.work = results[0].work;
-          // workBackend.bgColor = results[0].bgcolor;
-          // workBackend.bgColor = '#88b4b4';
-
-          //возвращаем обработанный объект на фронт
-          res.status(200).json({id: req.params.id, message: 'POST is success!'});
-        }
-      })
-  } catch (err) {
-    console.log('------------------- error catch insertWorkBackend 2 -----------------------');
-    console.log(err);
-    //возвращаем объект с ошибкой на фронт
-    res.status(500).json({ error: `*** ERROR-500 --> insertWorkBackend (catch) : ${err}` })
-  }
-  // database.end();
-}
+    // database.query(sqlQuery,
+    //   (err, results, fields) => {
+    //     //err = ошибка
+    //     console.log('------------------- err 2 ----------------------');
+    //     console.log(err);
+    //     //results = ответ от БД
+    //     console.log('------------------- results 2 -----------------------');
+    //     console.log(results);
+    //     // мета-данные полей
+    //     // console.log(fields);
+    //     if (err) {
+    //       //возвращаем объект с ошибкой на фронт
+    //       res.status(500).json({ error: `*** ERROR-500 --> insertWorkBackend (try) : ${err}` })
+    //     } else {
+    //       // workBackend.id = results[0].id.toString();
+    //       // workBackend.work = results[0].work;
+    //       // workBackend.bgColor = results[0].bgcolor;
+    //       // workBackend.bgColor = '#88b4b4';
+    //
+    //       //возвращаем обработанный объект на фронт
+    //       res.status(200).json({id: req.params.id, message: 'POST is success!'});
+    //     }
+    //   })
+//   } catch (err) {
+//     console.log('------------------- error catch insertWorkBackend :');
+//     console.log(err);
+//     //возвращаем объект с ошибкой на фронт
+//     res.status(500).json({ error: `*** ERROR-500 --> insertWorkBackend (catch) : ${err}` })
+//   }
+// }
 
 
  module.exports = { getAllWorksBackend, removeWorkBackend, insertWorkBackend, getWorkBackend, updateWorkBackend  }

@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import './TimeTrack.scss';
+import { Button } from 'primereact/button';
 
 const TimeTrack = () => {
   console.log('render TimeTrack...');
 
-  const [workDate, setWorkDate] = useState(0);
+  const [workDate, setWorkDate] = useState('');
 
   useEffect(() => {
     const currentDate = new Date();
@@ -20,18 +21,20 @@ const TimeTrack = () => {
     let day = currentDate.getDate();
     workDateD  = day < 10 ? '0' + day : '' + day;
 
-    setWorkDate(+(workDateY + workDateM + workDateD));
-    console.log(+(workDateY + workDateM + workDateD));
-    console.log(typeof +(workDateY + workDateM + workDateD));
+    const date = workDateY + workDateM + workDateD;
 
-  }, [setWorkDate]);
+    setWorkDate(date);
+    console.log(date);
+    console.log(typeof date);
+
+  }, []);
 
   return (
     <section className='timetrack'>
       <p>TimeTrack</p>
       <h3>Текущая дата : {workDate}</h3>
     </section>
-)
+  )
 }
 
 export default TimeTrack;
