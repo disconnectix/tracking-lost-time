@@ -20,8 +20,14 @@ const getTimetrackDateBackend = (req, res) => {
       (err, results, fields) => {
         if (err) {
           //возвращаем объект с ошибкой на фронт
-          res.status(500).json({ error: `*** ERROR-500 --> getTimetrackDateBackend (try) : ${err}` })
+          res.status(500).json({
+            date,
+            message: `*** ERROR-500 --> getTimetrackDateBackend (try) : ${err}`,
+            error: true,
+          })
+
         } else {
+
         if (!results[0]) {
 
           //TODO :::
@@ -47,15 +53,23 @@ const getTimetrackDateBackend = (req, res) => {
                 console.log('------------------- err insert ----------------------');
                 console.log(err);
                 //возвращаем объект с ошибкой на фронт
-                res.status(500).json({ error: `*** ERROR-500 --> getTimetrackDateBackend (insert) : ${err}` })
+                res.status(500).json({
+                  date,
+                  message: `*** ERROR-500 --> getTimetrackDateBackend (insert) : ${err}`,
+                  error: true,
+                });
+
               } else {
-                console.log('INSERT success!!!--------------------');
+
+                console.log('+++ INSERT is successfully!');
                 console.log({...defaultRecord, id: results.insertId, date});
                 //возвращаем обработанный объект на фронт
                 res.status(200).json({
                   ...defaultRecord,
                   id: results.insertId,
                   date,
+                  message: `+++ INSERT is successfully!`,
+                  error: false,
                 });
               }
             })
@@ -138,8 +152,7 @@ const updateTimetrackBackend = (req, res) => {
           res.status(200).json({
             date: req.params.date,
             message: `UPDATE : '${req.params.date}' --> is success!`,
-            error: null,
-            result: 'SUCCESS'
+            error: false,
           });
         }
       })

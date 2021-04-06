@@ -1,6 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import './TimeTrack.scss';
-import { Button } from 'primereact/button';
+import Loader from '../Loader';
+import Error from '../Error';
+import {Button} from 'primereact/button';
+import { Calendar } from 'primereact/calendar';
 import {request} from '../../utils/utils';
 
 const TimeTrack = () => {
@@ -8,6 +11,8 @@ const TimeTrack = () => {
 
   const [timetrackDate, setTimetrackDate] = useState('');
   const [timetrack, setTimetrack] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     const currentDate = new Date();
@@ -26,7 +31,7 @@ const TimeTrack = () => {
 
 
     // const date = timetrackDateY + timetrackDateM + timetrackDateD;
-    const date = '20210402';
+    const date = '20210401';
 
 
 
@@ -41,7 +46,7 @@ const TimeTrack = () => {
 
     const fetchPostWithDate = async () => {
       try {
-
+        setIsLoading(true);
 
         const serverResponse = await request(
           `/api/timetrack`,
@@ -51,33 +56,38 @@ const TimeTrack = () => {
           }
         );
 
-
-
-
         //ответ от сервера
         console.log('serverResponse --> ');
         console.log(serverResponse);
 
-//TODO ::: ***************************************************************************************************
-        //TODO :::
+//TODO :::
+//1) определить, что с бека пришел объект с ошибкой
+//2) отобразить ошибку в компоненте <Error/>
 
+/**
+ *
+ * res.status(500).json({
+            date,
+            message: `*** ERROR-500 --> getTimetrackDateBackend (try) : ${err}`,
+            error: true,
+          })
+ * */
 
-        setTimetrack(Object.entries(serverResponse));
+          if (serverResponse.error) {
+            setErrorMessage(serverResponse.message);
+          } else {
+            setTimetrack(Object.entries(serverResponse));
 
-        console.log('Object.entries(serverResponse)             ==>');
-        console.log(Object.entries(serverResponse));
-        console.log('timetrack                                  ==>');
-        console.log(timetrack);
+            console.log('Object.entries(serverResponse)             ==>');
+            console.log(Object.entries(serverResponse));
+            console.log('timetrack                                  ==>');
+            console.log(timetrack);
+          }
 
-      //   // если response - это массив, значит пришли ожидаемые данные
-      //   if (Array.isArray(serverResponse)) {
-      //     setWorksFrontend(serverResponse);
-      //   } else {
-      //     // если response - это объект, значит пришла ошибка
-      //     setErrorMessage(JSON.stringify(serverResponse.error));
-      //   }
+        setIsLoading(false);
+
       } catch (error) {
-        // setErrorMessage(`Works --> useEffect --> ${error}`);
+        setErrorMessage(`TimeTrack --> getDataHandler --> (catch) --> ${error}`);
       }
       // setIsLoading(false);
     };
@@ -91,6 +101,31 @@ const TimeTrack = () => {
       <p>TimeTrack</p>
       <h3>Текущая дата : {timetrackDate}</h3>
 
+
+
+
+
+      <div className="p-field p-col-12 p-md-4">
+        <label htmlFor="mask">Mask</label>
+        <Calendar
+          id="mask"
+          dateFormat="dd.mm.yy"
+          // value={timetrackDate}
+          value={'02.04.21'}
+          onChange={(e) => (e.value)}
+          showIcon
+          // minDate={minDate}
+          // maxDate={maxDate}
+          readOnlyInput
+        />
+      </div>
+
+
+
+
+
+
+
       <Button
         label='Get data'
         icon='pi pi-check'
@@ -100,6 +135,9 @@ const TimeTrack = () => {
 
 
       //TODO ::: ul перенести в отдельный компонент или функцию
+
+      { isLoading && <Loader/> }
+      { errorMessage && <Error message={errorMessage}/> }
 
       <ul>
         {
