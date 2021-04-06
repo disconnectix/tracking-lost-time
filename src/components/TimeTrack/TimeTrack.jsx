@@ -33,8 +33,6 @@ const TimeTrack = () => {
   // maxDate.setFullYear(nextYear);
 
 
-
-
   useEffect(() => {
     // // setTimetrackDate(new Date());
     // const currentDate = new Date();
@@ -111,9 +109,10 @@ const TimeTrack = () => {
             setErrorMessage(serverResponse.message);
           } else {
 
-            let result = Object.entries(serverResponse);
+            let result = [];
+            let arrServerResponse = Object.entries(serverResponse);
 
-            let removed = result.splice(0, 2);
+            let removed = arrServerResponse.splice(0, 2);
 
             const idResponse = removed[0][1];
             console.log('idResponse');
@@ -122,10 +121,22 @@ const TimeTrack = () => {
             console.log('dateResponse');
             console.log(dateResponse);
 
-            //TODO :2021-04-06:: "перегнать" result в новый массив объектов
-            //TODO ... { time : '00', work : 'coding', color: '#000000'}
+            //TODO :2021-04-06:: "перегнать" arrServerResponse в новый массив объектов
+            //TODO ... { date : '04.01.2021', time : '00', work : 'coding', color: '#000000'}
 
-            result = result.filter((elem, i) => (i !== 0) && (i !== 1));
+            for (let i = 0; i < 24; i++) {
+              removed = arrServerResponse.splice(0, 2);
+              let _obj = {};
+              _obj.date = dateResponse;
+              _obj.time = `${(removed[0][0]).slice(0, 2)} : 00`;
+              _obj.work = `${removed[0][1]}`;
+              _obj.color = `${removed[1][1]}`;
+              result.push(_obj);
+            }
+            console.log(result);
+
+
+            // arrServerResponse = arrServerResponse.filter((elem, i) => (i !== 0) && (i !== 1));
             setTimetrack(result);
 
             console.log('Object.entries(serverResponse)             ==>');
@@ -184,18 +195,18 @@ const TimeTrack = () => {
 
 
       <p>TODO ::: ul перенести в отдельный компонент или функцию</p>
-      <p>{timetrackDate.toDateString()}</p>
 
       { isLoading && <Loader/> }
       { errorMessage && <Error message={errorMessage}/> }
 
       <ul>
         {
-          timetrack.map((elem) =>
-            <li key={elem[0]}>
-              <span>{elem[0]}</span>
-              <span> : </span>
-              <span>{elem[1]}</span>
+          timetrack.map(tt =>
+            <li key={tt.time}>
+              <span>{tt.date}</span>
+              <span>{tt.time}</span>
+              <span style={{backgroundColor: `${tt.color}`}}>{tt.work}</span>
+              <span>{tt.color}</span>
             </li>
           )
         }

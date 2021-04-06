@@ -72,6 +72,7 @@ const Works = () => {
       //2) если ошибок нет - перерисовать компонент с удаленным work
       //TODO : 3) в css не работает transition, использовать react-transition... ???
 
+
       let works = worksFrontend.filter(elem => elem.id !== serverResponse.id)
       setWorksFrontend(works);
     } catch (err) {
