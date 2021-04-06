@@ -5,10 +5,10 @@ const Error = ({message}) => {
   console.log('Error -- Error -- message');
   console.log(message);
   return (
-    <div className='error'>
+    <section className='error'>
       <h2 className='error__header'>Error</h2>
       <p className='error__message'>{message.toString()}</p>
-    </div>
+    </section>
   );
 }
 

@@ -3,46 +3,80 @@ import './TimeTrack.scss';
 import Loader from '../Loader';
 import Error from '../Error';
 import {Button} from 'primereact/button';
-import { Calendar } from 'primereact/calendar';
+import {Calendar} from 'primereact/calendar';
 import {request} from '../../utils/utils';
 
 const TimeTrack = () => {
   console.log('render TimeTrack...');
 
-  const [timetrackDate, setTimetrackDate] = useState('');
+  const today = new Date();
+  const [timetrackDate, setTimetrackDate] = useState(today);
   const [timetrack, setTimetrack] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
+
+  // let month = today.getMonth();
+  // let year = today.getFullYear();
+  // let prevMonth = (month === 0) ? 11 : month - 1;
+  // let prevYear = (prevMonth === 11) ? year - 1 : year;
+  // let nextMonth = (month === 11) ? 0 : month + 1;
+  // let nextYear = (nextMonth === 0) ? year + 1 : year;
+
+
+  let minDate = new Date(2021, 2, 30);
+  // minDate.setMonth(prevMonth);
+  // minDate.setFullYear(prevYear);
+
+  let maxDate = new Date();
+  // maxDate.setMonth(nextMonth);
+  // maxDate.setFullYear(nextYear);
+
+
+
+
   useEffect(() => {
-    const currentDate = new Date();
-    console.log(currentDate);
-
-    const timetrackDateY = currentDate.getFullYear().toString();
-
-    let timetrackDateM = '';
-    let month = currentDate.getMonth() + 1;
-    timetrackDateM  = month < 10 ? '0' + month : '' + month;
-
-    let timetrackDateD = '';
-    let day = currentDate.getDate();
-    timetrackDateD  = day < 10 ? '0' + day : '' + day;
-
-
-
-    // const date = timetrackDateY + timetrackDateM + timetrackDateD;
-    const date = '20210401';
-
-
-
-    setTimetrackDate(date);
-    console.log(date);
-    console.log(typeof date);
+    // // setTimetrackDate(new Date());
+    // const currentDate = new Date();
+    // console.log(currentDate);
+    //
+    // const timetrackDateY = currentDate.getFullYear().toString();
+    //
+    // let timetrackDateM = '';
+    // let month = currentDate.getMonth() + 1;
+    // timetrackDateM = month < 10 ? '0' + month : '' + month;
+    //
+    // let timetrackDateD = '';
+    // let day = currentDate.getDate();
+    // timetrackDateD = day < 10 ? '0' + day : '' + day;
+    //
+    //
+    //
+    // // const date = timetrackDateY + timetrackDateM + timetrackDateD;
+    // const date = '20210401';
+    //
+    //
+    //
+    // setTimetrackDate(date);
+    // console.log(date);
+    // console.log(typeof date);
 
   }, []);
 
   const getDataHandler = () => {
     console.log('...click getDataHandler');
+    console.log(timetrackDate);
+
+    const currentDate = timetrackDate;
+    const timetrackDateY = currentDate.getFullYear().toString();
+    let timetrackDateM = '';
+    let month = currentDate.getMonth() + 1;
+    timetrackDateM = month < 10 ? '0' + month : '' + month;
+    let timetrackDateD = '';
+    let day = currentDate.getDate();
+    timetrackDateD = day < 10 ? '0' + day : '' + day;
+    const date = timetrackDateY + timetrackDateM + timetrackDateD;
+
 
     const fetchPostWithDate = async () => {
       try {
@@ -52,7 +86,7 @@ const TimeTrack = () => {
           `/api/timetrack`,
           'POST',
           {
-            date: timetrackDate,
+            date: date,
           }
         );
 
@@ -76,7 +110,23 @@ const TimeTrack = () => {
           if (serverResponse.error) {
             setErrorMessage(serverResponse.message);
           } else {
-            setTimetrack(Object.entries(serverResponse));
+
+            let result = Object.entries(serverResponse);
+
+            let removed = result.splice(0, 2);
+
+            const idResponse = removed[0][1];
+            console.log('idResponse');
+            console.log(idResponse);
+            const dateResponse = removed[1][1];
+            console.log('dateResponse');
+            console.log(dateResponse);
+
+            //TODO :2021-04-06:: "перегнать" result в новый массив объектов
+            //TODO ... { time : '00', work : 'coding', color: '#000000'}
+
+            result = result.filter((elem, i) => (i !== 0) && (i !== 1));
+            setTimetrack(result);
 
             console.log('Object.entries(serverResponse)             ==>');
             console.log(Object.entries(serverResponse));
@@ -96,26 +146,24 @@ const TimeTrack = () => {
 
   }
 
+  const onChangeHandler = (e) => {
+    setTimetrackDate(e.target.value);
+    console.log(e.target.value);
+  }
+
   return (
     <section className='timetrack'>
-      <p>TimeTrack</p>
-      <h3>Текущая дата : {timetrackDate}</h3>
+      <h3 className='timetrack__title'>Choose date please</h3>
 
-
-
-
-
-      <div className="p-field p-col-12 p-md-4">
-        <label htmlFor="mask">Mask</label>
+      <div className='p-field p-col-12 p-md-4 timetrack__date'>
         <Calendar
-          id="mask"
-          dateFormat="dd.mm.yy"
-          // value={timetrackDate}
-          value={'02.04.21'}
-          onChange={(e) => (e.value)}
+          id='currentDate'
+          dateFormat='dd.mm.yy'
+          value={timetrackDate}
+          onChange={onChangeHandler}
+          minDate={minDate}
+          maxDate={maxDate}
           showIcon
-          // minDate={minDate}
-          // maxDate={maxDate}
           readOnlyInput
         />
       </div>
@@ -126,15 +174,17 @@ const TimeTrack = () => {
 
 
 
+
       <Button
+        className='p-button-lg timetrack__get'
         label='Get data'
         icon='pi pi-check'
-        className='p-button-lg'
         onClick={getDataHandler}
       />
 
 
-      //TODO ::: ul перенести в отдельный компонент или функцию
+      <p>TODO ::: ul перенести в отдельный компонент или функцию</p>
+      <p>{timetrackDate.toDateString()}</p>
 
       { isLoading && <Loader/> }
       { errorMessage && <Error message={errorMessage}/> }

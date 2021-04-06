@@ -1,13 +1,17 @@
 .error {
   color: indianred;
   text-align: center;
+  max-width: 80vw;
+  margin: 2rem auto;
+  border: 2px solid indianred;
+  padding: 1rem;
 
   &__header {
     text-transform: uppercase;
   }
 
   &__message {
-    font-size: calc(16px + 1vmin);
+    font-size: calc(14px + 1vmin);
   }
 
 }
