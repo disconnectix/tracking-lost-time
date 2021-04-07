@@ -5,6 +5,7 @@ import Error from '../Error';
 import {Button} from 'primereact/button';
 import {Calendar} from 'primereact/calendar';
 import {request} from '../../utils/utils';
+import TimeTrackItem from '../TimeTrackItem';
 
 const TimeTrack = () => {
   console.log('render TimeTrack...');
@@ -121,8 +122,9 @@ const TimeTrack = () => {
             console.log('dateResponse');
             console.log(dateResponse);
 
-            //TODO :2021-04-06:: "перегнать" arrServerResponse в новый массив объектов
-            //TODO ... { date : '04.01.2021', time : '00', work : 'coding', color: '#000000'}
+            //TODO :::
+            //...:2021-04-06:: "перегнать" arrServerResponse в новый массив объектов
+            //... { date : '04.01.2021', time : '00 : 00', work : 'coding', color: '#000000'}
 
             for (let i = 0; i < 24; i++) {
               removed = arrServerResponse.splice(0, 2);
@@ -164,7 +166,7 @@ const TimeTrack = () => {
 
   return (
     <section className='timetrack'>
-      <h3 className='timetrack__title'>Choose date please</h3>
+      <h3 className='timetrack__title'>Choose date please :</h3>
 
       <div className='p-field p-col-12 p-md-4 timetrack__date'>
         <Calendar
@@ -179,13 +181,6 @@ const TimeTrack = () => {
         />
       </div>
 
-
-
-
-
-
-
-
       <Button
         className='p-button-lg timetrack__get'
         label='Get data'
@@ -193,20 +188,14 @@ const TimeTrack = () => {
         onClick={getDataHandler}
       />
 
-
-      <p>TODO ::: ul перенести в отдельный компонент или функцию</p>
-
       { isLoading && <Loader/> }
       { errorMessage && <Error message={errorMessage}/> }
 
-      <ul>
+      <ul className='timetrack__works'>
         {
-          timetrack.map(tt =>
-            <li key={tt.time}>
-              <span>{tt.date}</span>
-              <span>{tt.time}</span>
-              <span style={{backgroundColor: `${tt.color}`}}>{tt.work}</span>
-              <span>{tt.color}</span>
+          timetrack.map(objectWork =>
+            <li className='timetrack__work' key={objectWork.time}>
+              <TimeTrackItem objectWork={objectWork}/>
             </li>
           )
         }

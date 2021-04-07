@@ -1,20 +1,36 @@
 .timetrack {
   color: #761c49;
-}
 
-.timetrack__title {
-  margin: 2rem 2rem 0;
-  text-align: center;
-}
+  &__title {
+    margin: 2rem 2rem 0;
+    text-align: center;
+  }
 
-.timetrack__date {
-  text-align: center;
-  margin: 0 auto;
-}
+  &__date {
+    text-align: center;
+    margin: 0 auto;
+  }
 
-.timetrack__get {
-  margin: 0 auto;
-  display: block;
+  &__get {
+    margin: 0 auto;
+    display: block;
+  }
+
+  &__works {
+    background-color: lightgoldenrodyellow;
+    max-width: 80vw;
+    margin: 2rem auto;
+  }
+
+  &__work {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem 0;
+    border: 1px solid gray;
+    font-size: calc(16px + 1vmin);
+  }
 }
 
 .p-inputtext {
