@@ -17,12 +17,11 @@ const TimeTrack = () => {
   const [errorMessage, setErrorMessage] = useState('');
 
 
-  // let month = today.getMonth();
-  // let year = today.getFullYear();
-  // let prevMonth = (month === 0) ? 11 : month - 1;
-  // let prevYear = (prevMonth === 11) ? year - 1 : year;
-  // let nextMonth = (month === 11) ? 0 : month + 1;
-  // let nextYear = (nextMonth === 0) ? year + 1 : year;
+
+
+  const [worksFrontend, setWorksFrontend] = useState([]);
+
+
 
 
   let minDate = new Date(2021, 2, 30);
@@ -33,33 +32,30 @@ const TimeTrack = () => {
   // maxDate.setMonth(nextMonth);
   // maxDate.setFullYear(nextYear);
 
-
   useEffect(() => {
-    // // setTimetrackDate(new Date());
-    // const currentDate = new Date();
-    // console.log(currentDate);
-    //
-    // const timetrackDateY = currentDate.getFullYear().toString();
-    //
-    // let timetrackDateM = '';
-    // let month = currentDate.getMonth() + 1;
-    // timetrackDateM = month < 10 ? '0' + month : '' + month;
-    //
-    // let timetrackDateD = '';
-    // let day = currentDate.getDate();
-    // timetrackDateD = day < 10 ? '0' + day : '' + day;
-    //
-    //
-    //
-    // // const date = timetrackDateY + timetrackDateM + timetrackDateD;
-    // const date = '20210401';
-    //
-    //
-    //
-    // setTimetrackDate(date);
-    // console.log(date);
-    // console.log(typeof date);
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        // запрос к серверу
+        const serverResponse = await request(`/api/works`);
+        //ответ от сервера
+        console.log('serverResponse --> ');
+        console.log(serverResponse);
 
+        // если response - это массив, значит пришли ожидаемые данные
+        if (Array.isArray(serverResponse)) {
+          setWorksFrontend(serverResponse);
+        } else {
+          // если response - это объект, значит пришла ошибка
+          setErrorMessage(JSON.stringify(serverResponse.error));
+        }
+      } catch (error) {
+        setErrorMessage(`TimeTrack --> useEffect --> ${error}`);
+      }
+      setIsLoading(false);
+    };
+
+    fetchData().then( _ => _ );
   }, []);
 
   const getDataHandler = () => {
@@ -75,7 +71,6 @@ const TimeTrack = () => {
     let day = currentDate.getDate();
     timetrackDateD = day < 10 ? '0' + day : '' + day;
     const date = timetrackDateY + timetrackDateM + timetrackDateD;
-
 
     const fetchPostWithDate = async () => {
       try {
@@ -188,18 +183,41 @@ const TimeTrack = () => {
         onClick={getDataHandler}
       />
 
+
+
+      <div>
+        This is dynamic select element demo
+        <div>
+          <span>Select user</span> :
+          {worksFrontend && worksFrontend.length > 0 && (
+            <div>
+              <select onChange={() => {}}>
+                {worksFrontend.map((w, index) => {
+                  return <option style={{backgroundColor: w.bgColor}}>{w.work}</option>;
+                })}
+              </select>
+            </div>
+          )}
+        </div>
+      </div>
+
+
+
+
       { isLoading && <Loader/> }
       { errorMessage && <Error message={errorMessage}/> }
 
-      <ul className='timetrack__works'>
-        {
-          timetrack.map(objectWork =>
-            <li className='timetrack__work' key={objectWork.time}>
-              <TimeTrackItem objectWork={objectWork}/>
-            </li>
-          )
-        }
-      </ul>
+      { !isLoading && !errorMessage &&
+        <ul className='timetrack__works'>
+          {
+            timetrack.map(objectWork =>
+              <li className='timetrack__work' key={objectWork.time}>
+                <TimeTrackItem objectWork={objectWork}/>
+              </li>
+            )
+          }
+        </ul>
+      }
 
     </section>
   )

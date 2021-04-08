@@ -17,19 +17,24 @@
   }
 
   &__works {
-    background-color: lightgoldenrodyellow;
-    max-width: 80vw;
+    //background-color: lightgoldenrodyellow;
+    max-width: 70vw;
     margin: 2rem auto;
   }
 
   &__work {
     list-style: none;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     margin: 1rem 0;
-    border: 1px solid gray;
-    font-size: calc(16px + 1vmin);
+    //border: 1px solid #2a323d;
+    //font-size: calc(16px + 1vmin);
+    //background-color: #2a323d;
+    //
+    //padding: 5px 0;
+    //border-radius: 4px;
+    //color: rgba(255, 255, 255, 0.87);
   }
 }
 
