@@ -191,9 +191,9 @@ const TimeTrack = () => {
           <span>Select user</span> :
           {worksFrontend && worksFrontend.length > 0 && (
             <div>
-              <select onChange={() => {}}>
+              <select onChange={(e) => {console.log(e.target.value)}}>
                 {worksFrontend.map((w, index) => {
-                  return <option style={{backgroundColor: w.bgColor}}>{w.work}</option>;
+                  return <option key={w.work} style={{backgroundColor: w.bgColor}}>{w.work}</option>;
                 })}
               </select>
             </div>
