@@ -1,7 +1,7 @@
  import React from 'react';
  import './About.scss';
- // import WorksSelect from './WorksSelect.jsx';
- import WorkSelect2 from './WorkSelect2';
+ // import WorksSelect from './WorksSelect3.jsx';
+ import WorkSelect from './WorkSelect';
 
 //  const About = () => {
 //
@@ -61,7 +61,7 @@
         <h3 className="title">Custom React Select</h3>
         <div className="test">
 
-          <WorkSelect2
+          <WorkSelect
             defaultText={this.state.selectText}
             optionsList={this.countryList}
             currentWork={this.currentWork}

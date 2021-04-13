@@ -41,3 +41,40 @@
 .p-inputtext {
   font-size: calc(16px + 1vmin);
 }
+
+.item {
+
+
+  &__datetime {
+    //max-width: 25%;
+    border: 1px solid #2a323d;
+    font-size: calc(14px + 1vmin);
+    background-color: #2a323d;
+    padding: 5px;
+    border-radius: 4px;
+    color: rgba(255, 255, 255, 0.87);
+    margin-right: 20px;
+  }
+
+  &__date {
+
+  }
+  &__time {
+
+  }
+  &__workwrap {
+    border: 1px solid #2a323d;
+    font-size: calc(14px + 1vmin);
+    //background-color: #2a323d;
+    padding: 5px;
+    border-radius: 4px;
+    color: rgba(255, 255, 255, 0.87);
+    min-width: 70%;
+  }
+
+  &__work {
+    display: block;
+
+  }
+
+}

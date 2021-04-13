@@ -5,7 +5,6 @@ import Error from '../Error';
 import {Button} from 'primereact/button';
 import {Calendar} from 'primereact/calendar';
 import {request} from '../../utils/utils';
-import TimeTrackItem from '../TimeTrackItem';
 
 const TimeTrack = () => {
   console.log('render TimeTrack...');
@@ -15,14 +14,7 @@ const TimeTrack = () => {
   const [timetrack, setTimetrack] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-
-
-
-
   const [worksFrontend, setWorksFrontend] = useState([]);
-
-
-
 
   let minDate = new Date(2021, 2, 30);
   // minDate.setMonth(prevMonth);
@@ -211,8 +203,14 @@ const TimeTrack = () => {
         <ul className='timetrack__works'>
           {
             timetrack.map(objectWork =>
-              <li className='timetrack__work' key={objectWork.time}>
-                <TimeTrackItem objectWork={objectWork}/>
+              <li className='timetrack__work item' key={objectWork.time}>
+                <div className='item__datetime'>
+                  <span className='item__date'>{objectWork.date}</span>
+                  <span className='item__time'>{objectWork.time}</span>
+                </div>
+                <div className='item__workwrap'>
+                  <span className='item__work' style={{backgroundColor: `${objectWork.color}`}}>{objectWork.work}</span>
+                </div>
               </li>
             )
           }
@@ -226,6 +224,35 @@ const TimeTrack = () => {
 export default TimeTrack;
 
 /**
+ *
+ *
+ *
+ *
+ *
+ *         <ul className='timetrack__works'>
+ {
+            timetrack.map(objectWork =>
+              <li className='timetrack__work item' key={objectWork.time}>
+                <div className='item__datetime'>
+                  <span className='item__date'>{objectWork.date}</span>
+                  <span className='item__time'>{objectWork.time}</span>
+                </div>
+                <div className='item__workwrap'>
+                  <span className='item__work' style={{backgroundColor: `${objectWork.color}`}}>{objectWork.work}</span>
+                </div>
+              </li>
+            )
+          }
+ </ul>
+
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
  * import React, {useEffect, useState} from 'react';
  import './Workload.scss';
 

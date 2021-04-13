@@ -4,7 +4,7 @@ import chroma from 'chroma-js';
 import { colourOptions } from './data';
 import Select from 'react-select';
 
-let myColor = '#00ff00';
+let myColor = '#0000ff';
 
 const dot = (color = '#ccc') => ({
   alignItems: 'center',
