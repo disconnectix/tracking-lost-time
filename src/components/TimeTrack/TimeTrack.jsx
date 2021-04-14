@@ -5,6 +5,8 @@ import Error from '../Error';
 import {Button} from 'primereact/button';
 import {Calendar} from 'primereact/calendar';
 import {request, formatDate} from '../../utils/utils';
+//*******************************************************
+import WorkSelect from "../About/WorkSelect";
 
 const TimeTrack = () => {
   console.log('render TimeTrack...');
@@ -109,7 +111,7 @@ const TimeTrack = () => {
 
             //TODO :::
             //...:2021-04-06:: "перегнать" arrServerResponse в новый массив объектов
-            //... { date : '04.01.2021', time : '00 : 00', work : 'coding', color: '#000000'}
+            //... { date : '04.01.2021', time : '00 : 00', work : 'coding', bgColor: '#000000'}
 
             for (let i = 0; i < 24; i++) {
               removed = arrServerResponse.splice(0, 2);
@@ -117,7 +119,7 @@ const TimeTrack = () => {
               _obj.date = formatDate(dateResponse);
               _obj.time = `${(removed[0][0]).slice(0, 2)} : 00`;
               _obj.work = `${removed[0][1]}`;
-              _obj.color = `${removed[1][1]}`;
+              _obj.bgColor = `${removed[1][1]}`;
               result.push(_obj);
             }
             console.log(result);
@@ -149,6 +151,14 @@ const TimeTrack = () => {
     console.log(e.target.value);
   }
 
+  //************************************************************** TEST TEST TEST
+  const getCurrentWork = (changedWork) => {
+    console.log(`work : ${changedWork.work}`);
+    console.log(`bgColor : ${changedWork.bgColor}`);
+    console.log(`time : ${changedWork.time}`);
+  }
+  //************************************************************** TEST TEST TEST
+
   return (
     <section className='timetrack'>
       <h3 className='timetrack__title'>Choose date please :</h3>
@@ -173,27 +183,6 @@ const TimeTrack = () => {
         onClick={getDataHandler}
       />
 
-
-
-      <div>
-        This is dynamic select element demo
-        <div>
-          <span>Select user</span> :
-          {worksFrontend && worksFrontend.length > 0 && (
-            <div>
-              <select onChange={(e) => {console.log(e.target.value)}}>
-                {worksFrontend.map(w => {
-                  return <option key={w.work} style={{backgroundColor: w.bgColor}}>{w.work}</option>;
-                })}
-              </select>
-            </div>
-          )}
-        </div>
-      </div>
-
-
-
-
       { isLoading && <Loader/> }
       { errorMessage && <Error message={errorMessage}/> }
 
@@ -207,7 +196,11 @@ const TimeTrack = () => {
                   <span className='item__time'>{objectWork.time}</span>
                 </div>
                 <div className='item__workwrap'>
-                  <span className='item__work' style={{backgroundColor: `${objectWork.color}`}}>{objectWork.work}</span>
+                  <WorkSelect
+                    optionsList={worksFrontend}
+                    currentWork={objectWork}
+                    getCurrentWork={getCurrentWork}
+                  />
                 </div>
               </li>
             )
@@ -247,7 +240,22 @@ export default TimeTrack;
  *
  *
  *
- *
+ *      <div>
+ This is dynamic select element demo
+ <div>
+ <span>Select user</span> :
+ {worksFrontend && worksFrontend.length > 0 && (
+            <div>
+              <select onChange={(e) => {console.log(e.target.value)}}>
+                {worksFrontend.map(w => {
+                  return <option key={w.work} style={{backgroundColor: w.bgColor}}>{w.work}</option>;
+                })}
+              </select>
+            </div>
+          )}
+ </div>
+ </div>
+
  *
  *
  *

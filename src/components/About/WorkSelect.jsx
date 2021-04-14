@@ -2,11 +2,17 @@ import React, {useEffect, useState} from 'react';
 import './WorkSelect.scss';
 
 const WorkSelect = (props) => {
+  let { optionsList, currentWork, getCurrentWork } = props;
+
+  // currentWork = { id: 4, work: 'id=4 eatsplite', bgColor: '#ff00ff' };
+
+  // console.log('currentWork=========================================');
+  // console.log(currentWork);
+
+
   const [showOptionList, setShowOptionList] = useState(false);
   const [work, setWork] = useState('');
   const [bgColor, setBgColor] = useState('');
-
-  const { optionsList, currentWork, getCurrentWork } = props;
 
   const handleClickOutside = e => {
     if (
@@ -16,6 +22,8 @@ const WorkSelect = (props) => {
       setShowOptionList(false);
     }
   };
+
+  // const handleClickOutside = e => !e.target.classList.contains('select') && !e.target.classList.contains('select__current') && setShowOptionList(false);
 
   const handleListDisplay = () => {
     setShowOptionList(prevShowOptionList => !prevShowOptionList);
@@ -30,6 +38,7 @@ const WorkSelect = (props) => {
     getCurrentWork({
       work: e.target.getAttribute('data-work'),
       bgColor: e.target.getAttribute('data-bgcolor'),
+      time: currentWork.time,
     })
     //****************************************************** TEST TEST TEST
   };
@@ -45,7 +54,7 @@ const WorkSelect = (props) => {
   }, []);
 
     return (
-      <div className='select'>
+      <div className='select' >
         <div
           className={showOptionList ? 'select__current active' : 'select__current'}
           style={{backgroundColor: bgColor}}
@@ -67,8 +76,8 @@ const WorkSelect = (props) => {
                 >
                   {option.work}
                 </li>
-              );
-            })
+                );
+              })
             }
           </ul>
         )}
