@@ -6,7 +6,7 @@ import {Button} from 'primereact/button';
 import {Calendar} from 'primereact/calendar';
 import {request, formatDate} from '../../utils/utils';
 //*******************************************************
-import WorkSelect from "../About/WorkSelect";
+import WorkSelect from '../WorkSelect';
 
 const TimeTrack = () => {
   console.log('render TimeTrack...');

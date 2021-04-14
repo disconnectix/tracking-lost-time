@@ -115,6 +115,7 @@ const updateTimetrackBackend = (req, res) => {
     }
 
     setPart = setPart.trimEnd().slice(0, -1);
+    console.log('--- setPart >>>');
     console.log(setPart);
 
     let sqlQuery = ``;
@@ -127,17 +128,17 @@ const updateTimetrackBackend = (req, res) => {
       res.status(500).json({ error: `*** ERROR-500 --> updateTimetrackBackend (query) : req.body is EMPTY` })
     }
 
-    console.log('************* sqlQuery UPDATE ************** ');
+    console.log('--- sqlQuery UPDATE >>> ');
     console.log(sqlQuery);
 
     // запрос к БД
     database.query(sqlQuery,
       (err, results, fields) => {
         //err = ошибка
-        console.log('------------------- err 1 ----------------------');
+        console.log('------------------- err UPDATE ----------------------');
         console.log(err);
         //results = ответ от БД
-        console.log('------------------- results 1 -----------------------');
+        console.log('------------------- results UPDATE -----------------------');
         console.log(results);
         if (err) {
           //возвращаем объект с ошибкой на фронт
