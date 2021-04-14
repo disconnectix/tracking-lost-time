@@ -22,3 +22,5 @@ export const request = async (url, method = 'GET', data = null) => {
     throw Error({ message })
   }
 }
+
+export const formatDate = (date) => `${date.slice(6)}.${date.slice(4,6)}.${date.slice(0,4)}`;

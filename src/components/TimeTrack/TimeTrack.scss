@@ -46,14 +46,18 @@
 
 
   &__datetime {
-    //max-width: 25%;
     border: 1px solid #2a323d;
-    font-size: calc(14px + 1vmin);
+    font-size: calc(12px + 1vw);
     background-color: #2a323d;
     padding: 5px;
     border-radius: 4px;
     color: rgba(255, 255, 255, 0.87);
     margin-right: 20px;
+    display: flex;
+    min-width: 30%;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
   }
 
   &__date {
@@ -69,7 +73,7 @@
     padding: 5px;
     border-radius: 4px;
     color: rgba(255, 255, 255, 0.87);
-    min-width: 70%;
+    min-width: 65%;
   }
 
   &__work {

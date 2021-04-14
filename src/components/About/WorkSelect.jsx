@@ -6,6 +6,8 @@ const WorkSelect = (props) => {
   const [work, setWork] = useState('');
   const [bgColor, setBgColor] = useState('');
 
+  const { optionsList, currentWork, getCurrentWork } = props;
+
   const handleClickOutside = e => {
     if (
       !e.target.classList.contains('select') &&
@@ -25,7 +27,7 @@ const WorkSelect = (props) => {
     setShowOptionList(false);
 
     //****************************************************** TEST TEST TEST
-    props.getCurrentWork({
+    getCurrentWork({
       work: e.target.getAttribute('data-work'),
       bgColor: e.target.getAttribute('data-bgcolor'),
     })
@@ -34,15 +36,13 @@ const WorkSelect = (props) => {
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
-    setWork(props.currentWork.work);
-    setBgColor(props.currentWork.bgColor);
+    setWork(currentWork.work);
+    setBgColor(currentWork.bgColor);
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
     }
   }, []);
-
-  const { optionsList } = props;
 
     return (
       <div className='select'>

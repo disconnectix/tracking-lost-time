@@ -4,7 +4,7 @@ import Loader from '../Loader';
 import Error from '../Error';
 import {Button} from 'primereact/button';
 import {Calendar} from 'primereact/calendar';
-import {request} from '../../utils/utils';
+import {request, formatDate} from '../../utils/utils';
 
 const TimeTrack = () => {
   console.log('render TimeTrack...');
@@ -56,12 +56,10 @@ const TimeTrack = () => {
 
     const currentDate = timetrackDate;
     const timetrackDateY = currentDate.getFullYear().toString();
-    let timetrackDateM = '';
     let month = currentDate.getMonth() + 1;
-    timetrackDateM = month < 10 ? '0' + month : '' + month;
-    let timetrackDateD = '';
+    let timetrackDateM = month < 10 ? '0' + month : '' + month;
     let day = currentDate.getDate();
-    timetrackDateD = day < 10 ? '0' + day : '' + day;
+    let timetrackDateD = day < 10 ? '0' + day : '' + day;
     const date = timetrackDateY + timetrackDateM + timetrackDateD;
 
     const fetchPostWithDate = async () => {
@@ -116,7 +114,7 @@ const TimeTrack = () => {
             for (let i = 0; i < 24; i++) {
               removed = arrServerResponse.splice(0, 2);
               let _obj = {};
-              _obj.date = dateResponse;
+              _obj.date = formatDate(dateResponse);
               _obj.time = `${(removed[0][0]).slice(0, 2)} : 00`;
               _obj.work = `${removed[0][1]}`;
               _obj.color = `${removed[1][1]}`;
@@ -184,7 +182,7 @@ const TimeTrack = () => {
           {worksFrontend && worksFrontend.length > 0 && (
             <div>
               <select onChange={(e) => {console.log(e.target.value)}}>
-                {worksFrontend.map((w, index) => {
+                {worksFrontend.map(w => {
                   return <option key={w.work} style={{backgroundColor: w.bgColor}}>{w.work}</option>;
                 })}
               </select>
