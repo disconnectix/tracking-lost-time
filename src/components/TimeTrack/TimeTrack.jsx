@@ -18,6 +18,8 @@ const TimeTrack = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [worksFrontend, setWorksFrontend] = useState([]);
 
+  let changedCurrentTimetrack = [];
+
   let minDate = new Date(2021, 2, 30);
   // minDate.setMonth(prevMonth);
   // minDate.setFullYear(prevYear);
@@ -97,7 +99,7 @@ const TimeTrack = () => {
             setErrorMessage(serverResponse.message);
           } else {
 
-            let result = [];
+            let modifiedTimetrack = [];
             let arrServerResponse = Object.entries(serverResponse);
 
             let removed = arrServerResponse.splice(0, 2);
@@ -120,18 +122,27 @@ const TimeTrack = () => {
               _obj.time = `${(removed[0][0]).slice(0, 2)} : 00`;
               _obj.work = `${removed[0][1]}`;
               _obj.bgColor = `${removed[1][1]}`;
-              result.push(_obj);
+              modifiedTimetrack.push(_obj);
             }
-            console.log(result);
+            console.log(modifiedTimetrack);
 
+//****************************************************************************************************************
+            setTimetrack(modifiedTimetrack);
+            console.log('modifiedTimetrack --> timetrack                       ==>');
+            console.log(modifiedTimetrack);
 
-            // arrServerResponse = arrServerResponse.filter((elem, i) => (i !== 0) && (i !== 1));
-            setTimetrack(result);
+            changedCurrentTimetrack = JSON.parse(JSON.stringify(modifiedTimetrack));
+            console.log('changedCurrentTimetrack --> timetrack                       ==>');
+            console.log(changedCurrentTimetrack);
+            console.log(modifiedTimetrack === changedCurrentTimetrack);
+            console.log(modifiedTimetrack[0] === changedCurrentTimetrack[0]);
+            console.log(JSON.stringify(modifiedTimetrack[0]) === JSON.stringify(changedCurrentTimetrack[0]));
 
             console.log('Object.entries(serverResponse)             ==>');
             console.log(Object.entries(serverResponse));
             console.log('timetrack                                  ==>');
             console.log(timetrack);
+//****************************************************************************************************************
           }
 
         setIsLoading(false);
