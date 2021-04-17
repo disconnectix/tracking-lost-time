@@ -4,8 +4,7 @@ import Loader from '../Loader';
 import Error from '../Error';
 import {Button} from 'primereact/button';
 import {Calendar} from 'primereact/calendar';
-import {request, formatDate} from '../../utils/utils';
-//*******************************************************
+import {request, formatDate, formatDateRevers} from '../../utils/utils';
 import WorkSelect from '../WorkSelect';
 
 const TimeTrack = () => {
@@ -17,8 +16,7 @@ const TimeTrack = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [worksFrontend, setWorksFrontend] = useState([]);
-
-  let changedCurrentTimetrack = [];
+  const [changedTimetrack, setChangedTimetrack] = useState([]);
 
   let minDate = new Date(2021, 2, 30);
   // minDate.setMonth(prevMonth);
@@ -54,8 +52,8 @@ const TimeTrack = () => {
     fetchData().then( _ => _ );
   }, []);
 
-  const getDataHandler = () => {
-    console.log('...click getDataHandler');
+  const getTimetrackHandler = () => {
+    console.log('...click getTimetrackHandler');
     console.log(timetrackDate);
 
     const currentDate = timetrackDate;
@@ -71,11 +69,12 @@ const TimeTrack = () => {
         setIsLoading(true);
 
         const serverResponse = await request(
-          `/api/timetrack`,
-          'POST',
-          {
-            date: date,
-          }
+          `/api/timetrack/${date}`
+          //,
+          // 'POST',
+          // {
+          //   date: date,
+          // }
         );
 
         //ответ от сервера
@@ -128,19 +127,19 @@ const TimeTrack = () => {
 
 //****************************************************************************************************************
             setTimetrack(modifiedTimetrack);
-            console.log('modifiedTimetrack --> timetrack                       ==>');
+            console.log('modifiedTimetrack --> timetrack  ==>');
             console.log(modifiedTimetrack);
 
-            changedCurrentTimetrack = JSON.parse(JSON.stringify(modifiedTimetrack));
-            console.log('changedCurrentTimetrack --> timetrack                       ==>');
-            console.log(changedCurrentTimetrack);
-            console.log(modifiedTimetrack === changedCurrentTimetrack);
-            console.log(modifiedTimetrack[0] === changedCurrentTimetrack[0]);
-            console.log(JSON.stringify(modifiedTimetrack[0]) === JSON.stringify(changedCurrentTimetrack[0]));
+            setChangedTimetrack(JSON.parse(JSON.stringify(modifiedTimetrack)));
+            console.log('changedTimetrack --> timetrack  ==>');
+            console.log(changedTimetrack);
+            console.log(modifiedTimetrack === changedTimetrack);
+            console.log(modifiedTimetrack[0] === changedTimetrack[0]);
+            console.log(JSON.stringify(modifiedTimetrack[0]) === JSON.stringify(changedTimetrack[0]));
 
-            console.log('Object.entries(serverResponse)             ==>');
+            console.log('Object.entries(serverResponse)   ==>');
             console.log(Object.entries(serverResponse));
-            console.log('timetrack                                  ==>');
+            console.log('timetrack                        ==>');
             console.log(timetrack);
 //****************************************************************************************************************
           }
@@ -157,16 +156,109 @@ const TimeTrack = () => {
 
   }
 
+  const updateTimetrackHandler = () => {
+    console.log('...click updateTimetrackHandler');
+    console.log('changedTimetrack --> timetrack  ==>');
+    console.log(changedTimetrack);
+    console.log('timetrack                        ==>');
+    console.log(timetrack);
+
+    let allChanges = {};
+    let date = formatDateRevers(changedTimetrack[0].date);
+
+    for (let i = 0; i < timetrack.length; i++) {
+      if (JSON.stringify(timetrack[i]) !== JSON.stringify(changedTimetrack[i])) {
+        console.log(`timetrack[${i}]`);
+        console.log(timetrack[i]);
+        console.log(`changedTimetrack[${i}]`);
+        console.log(changedTimetrack[i]);
+
+        allChanges[`${changedTimetrack[i].time.slice(0, 2)}work`] = changedTimetrack[i].work;
+        allChanges[`${changedTimetrack[i].time.slice(0, 2)}color`] = changedTimetrack[i].bgColor;
+
+      }
+    }
+
+    console.log('allChanges --------------             ---------------');
+    console.log(allChanges);
+
+
+
+
+    const fetchUpdateWithDate = async () => {
+      try {
+        console.log('date++++++++++++++++++');
+        console.log(date);
+        console.log('allChanges++++++++++++++++++++');
+        console.log(allChanges);
+
+        // запрос к серверу
+        const serverResponse = await request(
+          `/api/timetrack/${date}`,
+          'POST',
+          // 'UPDATE'
+          {
+            ...allChanges
+          }
+        );
+
+        //ответ от сервера
+        console.log('serverResponse -- /api/timetrack/${date} --> ');
+        console.log(serverResponse);
+
+        if (!serverResponse) {
+          throw Error({message: 'Ответ сервера пуст!'})
+        }
+      } catch (error) {
+        setErrorMessage(`TimeTrack --> fetchUpdateWithDate --> (catch) --> ${error}`);
+      }
+    };
+
+    fetchUpdateWithDate().then( _ => _ );
+
+  }
+
   const onChangeHandler = (e) => {
     setTimetrackDate(e.target.value);
     console.log(e.target.value);
   }
 
   //************************************************************** TEST TEST TEST
+  //TODO :::
+  //TODO 1 -- получить данные из дочернего компонента WorkSelect
+  //TODO 2 -- обработать данные : из time получить индекс массива changedTimetrack
+  //TODO 3 -- занести данные в массив по полученному индексу
+  //TODO 4 -- протестировать
+
   const getCurrentWork = (changedWork) => {
-    console.log(`work : ${changedWork.work}`);
-    console.log(`bgColor : ${changedWork.bgColor}`);
-    console.log(`time : ${changedWork.time}`);
+
+    const {work, bgColor, time} = changedWork;
+
+    console.log(`work : ${work}`);
+    console.log(`bgColor : ${bgColor}`);
+    console.log(`time : ${time}`);
+
+    const indexTimetrack = +time.slice(0, 2);
+    console.log('indexTimetrack === ');
+    console.log(indexTimetrack);
+
+    console.log('changedTimetrack === ');
+    console.log(changedTimetrack);
+    console.log('changedTimetrack[indexTimetrack] === ');
+    console.log(changedTimetrack[indexTimetrack]);
+
+
+    let _tempArr = [...changedTimetrack];
+    _tempArr[indexTimetrack] = {...changedTimetrack[indexTimetrack], work, bgColor};
+    setChangedTimetrack(_tempArr);
+
+
+    console.log('_tempArr[indexTimetrack]  === ');
+    console.log(_tempArr[indexTimetrack]);
+    console.log('changedTimetrack[indexTimetrack] updated === ');
+    console.log(changedTimetrack[indexTimetrack]);
+
+
   }
   //************************************************************** TEST TEST TEST
 
@@ -187,12 +279,22 @@ const TimeTrack = () => {
         />
       </div>
 
-      <Button
-        className='p-button-lg timetrack__get'
-        label='Get data'
-        icon='pi pi-check'
-        onClick={getDataHandler}
-      />
+      <div className='timetrack__buttons'>
+        <Button
+          className='p-button-lg timetrack__button timetrack__button--get'
+          label='Get timetrack'
+          icon='pi pi-cloud-download'
+          onClick={getTimetrackHandler}
+        />
+
+        <Button
+          className='p-button-lg p-button-danger timetrack__button timetrack__button__update'
+          label='Update timetrack'
+          icon='pi pi-save'
+          onClick={updateTimetrackHandler}
+          disabled={false}
+        />
+      </div>
 
       { isLoading && <Loader/> }
       { errorMessage && <Error message={errorMessage}/> }

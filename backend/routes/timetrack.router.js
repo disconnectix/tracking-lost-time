@@ -2,19 +2,18 @@ const Router = require('express');
 
 const {
   getTimetrackDateBackend,
-  // removeWorkBackend,
-  // getWorkBackend,
   updateTimetrackBackend,
   getTimetrackIntervalBackend,
-  //insertTimetrackBackend
 } = require('../services/timetrack.service.js');
 
 const timetrackRouter = Router();
 
-timetrackRouter.post('/api/timetrack', getTimetrackDateBackend);
+timetrackRouter.get('/api/timetrack/:date', getTimetrackDateBackend);
 
 // timetrackRouter.post('/api/timetrack/change/:id', updateTimetrackBackend);
-timetrackRouter.put('/api/timetrack/:date', updateTimetrackBackend);
+
+timetrackRouter.post('/api/timetrack/:date', updateTimetrackBackend);
+// timetrackRouter.put('/api/timetrack/:date', updateTimetrackBackend);
 
 timetrackRouter.post('/api/timetrack/interval', getTimetrackIntervalBackend);
 

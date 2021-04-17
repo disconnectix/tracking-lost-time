@@ -4,14 +4,13 @@ const { defaultRecord } = require('../../src/components/TimeTrack/defaultRecord.
 const getTimetrackDateBackend = (req, res) => {
   console.log(`timetrack.service -- getTimetrackDateBackend -- req.body : `);
 
-  //TODO ::: в req.body жду с фронта объект примерно такого вида :
-  //TODO ... { "data" : "20210331" }
+  console.log(req.body);
 
-    console.log(req.body);
+    // const { date } = req.body;
+    //
+    // console.log(date);
 
-    const { date } = req.body;
-
-    console.log(date);
+  const date = req.params.date;
 
   try {
     let timetrackBackend = {};
@@ -104,7 +103,7 @@ const updateTimetrackBackend = (req, res) => {
   //TODO :::
   //TODO Протестировать запрос UPDATE в БД
 
-  // UPDATE `works` SET `work`='eat2',`bgcolor`='#ff3302' WHERE id = 11
+  //`UPDATE timetrack SET 00work='coding', 00color='#ff0000', 01work='eat', 01color='#00ff00' WHERE date='20210401'`
 
   try {
 

@@ -24,3 +24,5 @@ export const request = async (url, method = 'GET', data = null) => {
 }
 
 export const formatDate = (date) => `${date.slice(6)}.${date.slice(4,6)}.${date.slice(0,4)}`;
+
+export const formatDateRevers = (date) => `${date.slice(6)}${date.slice(3,5)}${date.slice(0,2)}`;

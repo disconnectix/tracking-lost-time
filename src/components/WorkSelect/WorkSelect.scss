@@ -7,7 +7,7 @@
     padding: 3px 20px;
     border: 3px solid #2a323d;
     border-radius: 4px;
-    font-size: calc(12px + 1vw);
+    font-size: calc(16px + 0.6vw);
   }
 
   &__current::after {
@@ -43,7 +43,7 @@
     list-style-type: none;
     padding: 6px 20px;
     cursor: pointer;
-    font-size: calc(14px + 1vmin);
+    font-size: calc(16px + 0.6vw);
   }
 
   &__item:hover {
