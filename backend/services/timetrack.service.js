@@ -67,8 +67,8 @@ const getTimetrackDateBackend = (req, res) => {
                   ...defaultRecord,
                   id: results.insertId,
                   date,
-                  message: `+++ INSERT is successfully!`,
-                  error: false,
+                  // message: `+++ INSERT is successfully!`,
+                  // error: false,
                 });
               }
             })

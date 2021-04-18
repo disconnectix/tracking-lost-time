@@ -68,7 +68,7 @@ const TimeTrack = () => {
       try {
         setIsLoading(true);
 
-        const serverResponse = await request(
+        let serverResponse = await request(
           `/api/timetrack/${date}`
           //,
           // 'POST',
@@ -99,23 +99,52 @@ const TimeTrack = () => {
           } else {
 
             let modifiedTimetrack = [];
-            let arrServerResponse = Object.entries(serverResponse);
 
-            let removed = arrServerResponse.splice(0, 2);
 
-            const idResponse = removed[0][1];
+            const idResponse = serverResponse.id;
             console.log('idResponse');
             console.log(idResponse);
-            const dateResponse = removed[1][1];
+            const dateResponse = serverResponse.date;
             console.log('dateResponse');
             console.log(dateResponse);
+
+            delete serverResponse.id;
+            delete serverResponse.date;
+
+            // let _obj = {}
+            // for (let prop in serverResponse) {
+            //   if (prop !== 'id' && prop !== 'date') {
+            //     _obj[`${prop}`] = serverResponse[`${prop}`];
+            //   }
+            // }
+            //
+            // console.log('_obj --> ');
+            // console.log(_obj);
+            //
+            // serverResponse = {..._obj}
+
+            let arrServerResponse = Object.entries(serverResponse);
+            console.log('arrServerResponse');
+            console.log(Object.entries(serverResponse));
+
+            // let removed = arrServerResponse.splice(0, 2);
+            // console.log('removed');
+            // console.log(removed);
+
+            // const idResponse = removed[0][1];
+            // console.log('idResponse');
+            // console.log(idResponse);
+            // const dateResponse = removed[1][1];
+            // console.log('dateResponse');
+            // console.log(dateResponse);
+
 
             //TODO :::
             //...:2021-04-06:: "перегнать" arrServerResponse в новый массив объектов
             //... { date : '04.01.2021', time : '00 : 00', work : 'coding', bgColor: '#000000'}
 
             for (let i = 0; i < 24; i++) {
-              removed = arrServerResponse.splice(0, 2);
+              let removed = arrServerResponse.splice(0, 2);
               let _obj = {};
               _obj.date = formatDate(dateResponse);
               _obj.time = `${(removed[0][0]).slice(0, 2)} : 00`;
@@ -182,9 +211,6 @@ const TimeTrack = () => {
     console.log('allChanges --------------             ---------------');
     console.log(allChanges);
 
-
-
-
     const fetchUpdateWithDate = async () => {
       try {
         console.log('date++++++++++++++++++');
@@ -214,7 +240,14 @@ const TimeTrack = () => {
       }
     };
 
-    fetchUpdateWithDate().then( _ => _ );
+    //TODO :::
+    //...Если allChanges пустой, то выполнять update НЕ нужно!
+    //...проверить объект
+    //...на основе проверки объекта можно сделать доступность кнопки апдейта
+
+    if (Object.keys(allChanges).length !== 0) {
+      fetchUpdateWithDate().then( _ => _ );
+    }
 
   }
 
