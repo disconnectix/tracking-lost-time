@@ -15,7 +15,7 @@ timetrackRouter.get('/api/timetrack/:date', getTimetrackDateBackend);
 timetrackRouter.post('/api/timetrack/:date', updateTimetrackBackend);
 // timetrackRouter.put('/api/timetrack/:date', updateTimetrackBackend);
 
-timetrackRouter.post('/api/timetrack/interval', getTimetrackIntervalBackend);
+timetrackRouter.post('/api/timetracks', getTimetrackIntervalBackend);
 
 
 // timetrackRouter.post('/api/timetrack/insert', insertTimetrackBackend);

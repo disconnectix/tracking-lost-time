@@ -180,6 +180,8 @@ const getTimetrackIntervalBackend = (req, res) => {
 
   // SELECT * FROM `timetrack` WHERE date >= '20210331' AND date <= '20210401'
 
+  //SELECT * FROM `timetrack` WHERE (date >= '20210403') and (date <= '20210410')
+
   try {
     let timetrackBackend = [];
     // запрос к БД

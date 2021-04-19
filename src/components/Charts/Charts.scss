@@ -1,4 +1,20 @@
 .charts {
-  color: #03971f;
+
+
+  &__title {
+    text-align: center;
+  }
+
+  &__dates {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    text-align: center;
+  }
+
+  &__date {
+    min-width: 14rem;
+  }
 }
 
