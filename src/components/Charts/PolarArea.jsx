@@ -1,5 +1,5 @@
 import React from 'react'
-import {Polar} from './react-chartjs-2.js'
+// import {Polar} from './react-chartjs-2.js'
 // import { PolarArea } from '@reactchartjs/react-chart.js'
 
 
@@ -38,7 +38,7 @@ const Polar2 = () => (
     </div>
     {/*<Polar data={data}/>*/}
     {/*<PolarArea data={data} />*/}
-    <Polar type='polarArea' data={data}/>
+    {/*<Polar type='polarArea' data={data}/>*/}
   </>
 )
 
