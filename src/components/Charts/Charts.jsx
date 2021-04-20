@@ -3,6 +3,7 @@ import './Charts.scss';
 import Loader from '../Loader';
 import Error from '../Error';
 import {Calendar} from 'primereact/calendar';
+import PolarArea from "./PolarArea";
 // import Polar from "./PolarArea";
 // import {Polar} from 'react-chartjs-2';
 
@@ -275,15 +276,11 @@ let _arr = [
       {
         !isLoading && !errorMessage &&
 
-        <div className="card">
+        <div className='card'>
 
-          <div className='wrapper'>
-            <h2>Polar Example</h2>
-            {/*<Polar data={data} />*/}
+          <PolarArea/>
 
-            {/*<Polar/>*/}
 
-          </div>
 
         </div>
       }
