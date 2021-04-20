@@ -2,7 +2,9 @@ import React, {useState} from 'react';
 import './Charts.scss';
 import Loader from '../Loader';
 import Error from '../Error';
-import {Calendar} from "primereact/calendar";
+import {Calendar} from 'primereact/calendar';
+import Polar from "./PolarArea";
+// import {Polar} from 'react-chartjs-2';
 
 const Charts = () => {
   console.log('render Charts...');
@@ -23,7 +25,7 @@ const Charts = () => {
 
 
 
-let _arr0 = [
+let _arr = [
     {
       "id": 3,
       "date": "20210401",
@@ -60,21 +62,76 @@ let _arr0 = [
 
   // let _arr1 = JSON.parse(JSON.stringify(_arr0));
 
-  for (const elem of _arr0) {
+  for (const elem of _arr) {
     delete elem.id;
     delete elem.date;
-    console.log(elem);
   }
 
-  let _ = Object.entries(_arr0[0]);
-  console.log('Object.entries(_arr0[0])');
-  console.log(Object.entries(_arr0[0]));
+  console.log('_arr ::: 1');
+  console.log(_arr);
+
+  // for (const elem of _arr) {
+  // }
+
+  let _elemArr = Object.entries(_arr[0]);
+  console.log('Object.entries(_arr[0])');
+  console.log(Object.entries(_arr[0]));
+
+  let _tempArray = [];
+  let _tempSet = new Set();
+
+  for (let i = 0; i < _elemArr.length - 1; i++) {
+    let _tempArr = [];
+    if (_elemArr[i][0].slice(0,2) === _elemArr[i+1][0].slice(0,2)
+      && _elemArr[i][0].slice(2) === 'work'
+      && _elemArr[i+1][0].slice(2) === 'color') {
+      _tempArr.push(_elemArr[i][1]);
+      _tempArr.push(_elemArr[i+1][1]);
+      // console.log(`${_elemArr[i][1]} -- ${_elemArr[i+1][1]}`);
+      console.log(_tempArr);
+      _tempArray.push(_tempArr);
+      _tempSet.add(JSON.stringify(_tempArr));
+    }
+  }
+
+  console.log('_tempArray');
+  console.log(_tempArray);
+  console.log('_tempSet');
+  console.log(_tempSet);
+
+  console.log('------------------------------------------------------------- ***');
+  let _tempSetToArray = [];
+  _tempSet.forEach((elem, key, _tempSet) => {
+    _tempSetToArray.push(JSON.parse(elem))
+  })
+
+  console.log('_tempSetToArray');
+  console.log(_tempSetToArray);
+
+  for (const elem of _tempSetToArray) {
+    elem.push(0);
+  }
+
+  console.log('_tempSetToArray + 0');
+  console.log(_tempSetToArray);
+
+  for (const elemA of _tempArray) {
+    for (const elemS of _tempSetToArray) {
+      if (elemA[0] === elemS[0] && elemA[1] === elemS[1]) {
+        elemS[2] += 1;
+      }
+    }
+  }
+
+  console.log('_tempSetToArray + number');
+  console.log(_tempSetToArray);
+
 
   //TODO :::
   //TODO ..."откусывать" от массива по два элемента : 0-й и 1-й
   //TODO ...помещать в массив [действие(0), цвет_действия(1)]
-  //TODO ...и все эти массивы поместить 1) в родительский массив
-  //TODO ...и все эти массивы поместить 2) в Set
+  //TODO ...и все эти массивы 1) поместить в родительский массив
+  //TODO ...и все эти массивы 2) пропустить через JSON.srtingify и поместить в Set
   //TODO ...сделать из Set массив, добавить в каждый элемент счетчик : [действие(0), цвет_действия(1), счетчик(2) = 0]
   //TODO ...бежать по родительскому массиву и при совпадении (0) и (1) инкрементировать (2)
 
@@ -101,6 +158,83 @@ let _arr0 = [
     setDateEnd(e.target.value);
     console.log(e.target.value);
   }
+
+
+
+
+
+
+
+  //---------------------------------------------------------------------------------------------------
+  // const chartData = {
+  //   datasets: [{
+  //     data: [
+  //       11,
+  //       16,
+  //       7,
+  //       3,
+  //       14
+  //     ],
+  //     backgroundColor: [
+  //       "#42A5F5",
+  //       "#66BB6A",
+  //       "#FFA726",
+  //       "#26C6DA",
+  //       "#7E57C2"
+  //     ],
+  //     label: 'My dataset'
+  //   }],
+  //   labels: [
+  //     "Red",
+  //     "Green",
+  //     "Yellow",
+  //     "Grey",
+  //     "Blue"
+  //   ]
+  // };
+  //
+  // const lightOptions = {
+  //   legend: {
+  //     labels: {
+  //       fontColor: '#495057'
+  //     }
+  //   },
+  //   scale: {
+  //     gridLines: {
+  //       color: '#ebedef'
+  //     }
+  //   }
+  // };
+
+  const data = {
+    datasets: [{
+      data: [
+        11,
+        16,
+        7,
+        3,
+        14
+      ],
+      backgroundColor: [
+        '#FF6384',
+        '#4BC0C0',
+        '#FFCE56',
+        '#E7E9ED',
+        '#36A2EB'
+      ],
+      label: 'My dataset'
+    }],
+    labels: [
+      'Red',
+      'Green',
+      'Yellow',
+      'Grey',
+      'Blue'
+    ]
+  };
+
+  //---------------------------------------------------------------------------------------------------
+
 
   return (
     <section className='charts'>
@@ -140,7 +274,18 @@ let _arr0 = [
 
       {
         !isLoading && !errorMessage &&
-        <h2>Основной контент</h2>
+
+        <div className="card">
+
+          <div className='wrapper'>
+            <h2>Polar Example</h2>
+            {/*<Polar data={data} />*/}
+
+            <Polar/>
+
+          </div>
+
+        </div>
       }
 
 
