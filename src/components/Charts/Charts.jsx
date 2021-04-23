@@ -28,24 +28,40 @@ const Charts = () => {
 
 let _arr = [
     {
-      "id": 3,
+      "id": 1,
       "date": "20210401",
-      "00work": "coding",      "00color": "#ff0000",      "01work": "eat",      "01color": "#00ff00",
-      "02work": "завтрак",      "02color": "#0000ff",      "03work": "coding",      "03color": "#00cc00",
-      "04work": "walk",      "04color": "#00ccff",      "05work": "game",      "05color": "#fa661b",
-      "06work": "walk",      "06color": "#00ccff",      "07work": "coding44444555",      "07color": "#b963cf",
-      "08work": "unknow",      "08color": "#000000",      "09work": "unknow",      "09color": "#000000",
-      "10work": "unknow",      "10color": "#000000",      "11work": "unknow",      "11color": "#000000",
-      "12work": "unknow",      "12color": "#000000",      "13work": "unknow",      "13color": "#000000",
-      "14work": "unknow",      "14color": "#000000",      "15work": "unknow",      "15color": "#000000",
-      "16work": "unknow",      "16color": "#000000",      "17work": "unknow",      "17color": "#000000",
-      "18work": "unknow",      "18color": "#000000",      "19work": "unknow",      "19color": "#000000",
-      "20work": "unknow",      "20color": "#000000",      "21work": "unknow",      "21color": "#000000",
-      "22work": "unknow",      "22color": "#000000",      "23work": "2021-13-04--20-31",      "23color": "#e67ce6"
+      "00work": "111111",      "00color": "#ff0000",      "01work": "222222",      "01color": "#00ff00",
+      "02work": "333333",      "02color": "#0000ff",      "03work": "444444",      "03color": "#ffff00",
+      "04work": "111111",      "04color": "#ff0000",      "05work": "222222",      "05color": "#00ff00",
+      "06work": "333333",      "06color": "#0000ff",      "07work": "444444",      "07color": "#ffff00",
+      "08work": "111111",      "08color": "#ff0000",      "09work": "222222",      "09color": "#00ff00",
+      "10work": "333333",      "10color": "#0000ff",      "11work": "444444",      "11color": "#ffff00",
+      "12work": "111111",      "12color": "#ff0000",      "13work": "222222",      "13color": "#00ff00",
+      "14work": "333333",      "14color": "#0000ff",      "15work": "444444",      "15color": "#ffff00",
+      "16work": "111111",      "16color": "#ff0000",      "17work": "222222",      "17color": "#00ff00",
+      "18work": "333333",      "18color": "#0000ff",      "19work": "444444",      "19color": "#ffff00",
+      "20work": "111111",      "20color": "#ff0000",      "21work": "222222",      "21color": "#00ff00",
+      "22work": "333333",      "22color": "#0000ff",      "23work": "444444",      "23color": "#ffff00"
     },
+  {
+    "id": 4,
+    "date": "20210402",
+    "00work": "game", "00color": "#fa661b", "01work": "unknow", "01color": "#000000",
+    "02work": "cod020202", "02color": "#ff0000", "03work": "eat030303", "03color": "#00ff00",
+    "04work": "unknow", "04color": "#000000", "05work": "unknow", "05color": "#000000",
+    "06work": "unknow", "06color": "#000000", "07work": "unknow", "07color": "#000000",
+    "08work": "unknow", "08color": "#000000", "09work": "unknow", "09color": "#000000",
+    "10work": "unknow", "10color": "#000000", "11work": "unknow", "11color": "#000000",
+    "12work": "unknow", "12color": "#000000", "13work": "unknow", "13color": "#000000",
+    "14work": "unknow", "14color": "#000000", "15work": "unknow", "15color": "#000000",
+    "16work": "unknow", "16color": "#000000", "17work": "unknow", "17color": "#000000",
+    "18work": "unknow", "18color": "#000000", "19work": "unknow", "19color": "#000000",
+    "20work": "unknow", "20color": "#000000", "21work": "unknow", "21color": "#000000",
+    "22work": "unknow", "22color": "#000000", "23work": "unknow", "23color": "#000000"
+  },
     {
-      "id": 4,
-      "date": "20210402",
+      "id": 5,
+      "date": "20210403",
       "00work": "game",      "00color": "#fa661b",    "01work": "unknow",      "01color": "#000000",
       "02work": "cod020202",      "02color": "#ff0000",      "03work": "eat030303",      "03color": "#00ff00",
       "04work": "unknow",      "04color": "#000000",      "05work": "unknow",      "05color": "#000000",
@@ -125,27 +141,21 @@ let _arr = [
   }
 
   console.log('_tempSetToArray + number');
+
+  //TODO ::: реализовать цикл
+  //TODO ::: протестировать цикл
+  //TODO ::: переименовать массив
+
   console.log(_tempSetToArray);
 
 
   //TODO :::
-  //TODO ..."откусывать" от массива по два элемента : 0-й и 1-й
-  //TODO ...помещать в массив [действие(0), цвет_действия(1)]
-  //TODO ...и все эти массивы 1) поместить в родительский массив
-  //TODO ...и все эти массивы 2) пропустить через JSON.srtingify и поместить в Set
-  //TODO ...сделать из Set массив, добавить в каждый элемент счетчик : [действие(0), цвет_действия(1), счетчик(2) = 0]
-  //TODO ...бежать по родительскому массиву и при совпадении (0) и (1) инкрементировать (2)
-
-
-
-
-
-
-
-
-
-
-
+  //..."откусывать" от массива по два элемента : 0-й и 1-й
+  //...помещать в массив [действие(0), цвет_действия(1)]
+  //...и все эти массивы 1) поместить в родительский массив
+  //...и все эти массивы 2) пропустить через JSON.srtingify и поместить в Set
+  //...сделать из Set массив, добавить в каждый элемент счетчик : [действие(0), цвет_действия(1), счетчик(2) = 0]
+  //...бежать по родительскому массиву и при совпадении (0) и (1) инкрементировать (2)
 
 
 
@@ -207,32 +217,6 @@ let _arr = [
   //   }
   // };
 
-  const data = {
-    datasets: [{
-      data: [
-        11,
-        16,
-        7,
-        3,
-        14
-      ],
-      backgroundColor: [
-        '#FF6384',
-        '#4BC0C0',
-        '#FFCE56',
-        '#E7E9ED',
-        '#36A2EB'
-      ],
-      label: 'My dataset'
-    }],
-    labels: [
-      'Red',
-      'Green',
-      'Yellow',
-      'Grey',
-      'Blue'
-    ]
-  };
 
   //---------------------------------------------------------------------------------------------------
 
@@ -278,7 +262,7 @@ let _arr = [
 
         <div className='card'>
 
-          <PolarArea/>
+          <PolarArea chartData={_tempSetToArray}/>
 
 
 
