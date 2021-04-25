@@ -17,9 +17,25 @@
     min-width: 14rem;
   }
 
+  &__buttons {
+    text-align: center;
+  }
+
+  &__button {
+    margin: 0.5rem 1rem;
+    min-width: 14rem;
+  }
+
+  &__button--get {
+  }
+
 }
 
 .card {
   max-width: 95%;
   background-color: inherit;
+}
+
+.p-field {
+  margin-bottom: 0 !important;
 }

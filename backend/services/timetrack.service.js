@@ -167,8 +167,9 @@ const updateTimetrackBackend = (req, res) => {
 const getTimetrackIntervalBackend = (req, res) => {
   console.log(`timetrack.service -- getTimetrackIntervalBackend -- req.body : `);
 
-  //TODO ::: в req.body жду с фронта объект примерно такого вида :
-  //TODO ... { "dateBegin" : "20210331", "dateEnd" : "20210401" }
+  //TODO :::
+  //... в req.body жду с фронта объект примерно такого вида :
+  // ... { "dateBegin" : "20210331", "dateEnd" : "20210401" }
 
   console.log(req.body);
 
@@ -182,10 +183,24 @@ const getTimetrackIntervalBackend = (req, res) => {
 
   //SELECT * FROM `timetrack` WHERE (date >= '20210403') and (date <= '20210410')
 
+  //TODO ::: 2021-04-25 :::
+  //TODO ... dateBegin может быть БОЛЬШЕ dateEnd
+  //TODO ... поэтому необх. учесть такую возможность
+  //TODO ... и отразить в построении запроса sqlQuery
+
+
+  const sqlQuery = dateBegin === dateEnd
+    ?
+    `SELECT * FROM timetrack WHERE date = '${dateBegin}'`
+    :
+    `SELECT * FROM timetrack WHERE date >= '${dateBegin}' AND date <= '${dateEnd}'`;
+
+  console.log(sqlQuery);
+
   try {
     let timetrackBackend = [];
     // запрос к БД
-    database.query(`SELECT * FROM timetrack WHERE date >= '${dateBegin}' AND date <= '${dateEnd}'`,
+    database.query(sqlQuery,
       (err, results, fields) => {
         if (err) {
           //возвращаем объект с ошибкой на фронт
@@ -368,18 +383,8 @@ module.exports = { getTimetrackDateBackend, updateTimetrackBackend, getTimetrack
   const id = req.params.id;
   const { work, bgColor, method } = req.body;
 
-  //TODO :::
-  //TODO Протестировать запрос UPDATE в БД
 
   // UPDATE `works` SET `work`='eat2',`bgcolor`='#ff3302' WHERE id = 11
-
-  //TODO Метод UPDATE должен изменять в БД точечно : т е ...
-  //TODO ... только те данные, которые реально изменились ...
-  //TODO ... значит изменения данных надо контролить еще на клиенте ...
-  //TODO ... и сюда присылать только измененные поля
-
-  //TODO Но в данный момент (пока) будет реализовано ...
-  //TODO ... изменение всех пришедших данных
 
   try {
     console.log('worksService -- updateWorkBackend --> ');
@@ -443,17 +448,11 @@ module.exports = { getTimetrackDateBackend, updateTimetrackBackend, getTimetrack
   // const id = req.params.id;
   // const { work, bgColor, method } = req.body;
 
-  //TODO :::
-  //TODO Протестировать запрос в БД
-
   // UPDATE `works` SET `work`='eat2',`bgcolor`='#ff3302' WHERE id = 11
 
 
   // try {
   //   console.log('timetrack.service -- insertTimetrackBackend --> ');
-  //
-  //   //TODO ::: в req.body жду с фронта объект примерно такого вида :
-  //   //TODO ... { "data" : "20210331" }
   //
   //   console.log(req.body);
   //

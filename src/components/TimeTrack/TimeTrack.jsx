@@ -4,7 +4,7 @@ import Loader from '../Loader';
 import Error from '../Error';
 import {Button} from 'primereact/button';
 import {Calendar} from 'primereact/calendar';
-import {request, formatDate, formatDateRevers} from '../../utils/utils';
+import {request, formatDate, formatDateRevers, convertNewDate} from '../../utils/utils';
 import WorkSelect from '../WorkSelect';
 
 const TimeTrack = () => {
@@ -56,13 +56,15 @@ const TimeTrack = () => {
     console.log('...click getTimetrackHandler');
     console.log(timetrackDate);
 
-    const currentDate = timetrackDate;
-    const timetrackDateY = currentDate.getFullYear().toString();
-    let month = currentDate.getMonth() + 1;
-    let timetrackDateM = month < 10 ? '0' + month : '' + month;
-    let day = currentDate.getDate();
-    let timetrackDateD = day < 10 ? '0' + day : '' + day;
-    const date = timetrackDateY + timetrackDateM + timetrackDateD;
+    // const currentDate = timetrackDate;
+    // const timetrackDateY = currentDate.getFullYear().toString();
+    // let month = currentDate.getMonth() + 1;
+    // let timetrackDateM = month < 10 ? '0' + month : '' + month;
+    // let day = currentDate.getDate();
+    // let timetrackDateD = day < 10 ? '0' + day : '' + day;
+    // const date = timetrackDateY + timetrackDateM + timetrackDateD;
+
+    const date = convertNewDate(timetrackDate);
 
     const fetchPostWithDate = async () => {
       try {

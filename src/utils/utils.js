@@ -26,3 +26,12 @@ export const request = async (url, method = 'GET', data = null) => {
 export const formatDate = (date) => `${date.slice(6)}.${date.slice(4,6)}.${date.slice(0,4)}`;
 
 export const formatDateRevers = (date) => `${date.slice(6)}${date.slice(3,5)}${date.slice(0,2)}`;
+
+export const convertNewDate = (newDate) => {
+  const _dateY = newDate.getFullYear().toString();
+  let month = newDate.getMonth() + 1;
+  let _dateM = month < 10 ? '0' + month : '' + month;
+  let day = newDate.getDate();
+  let _dateD = day < 10 ? '0' + day : '' + day;
+  return _dateY + _dateM + _dateD;
+}
