@@ -31,6 +31,14 @@
     padding: 0 !important;
   }
 
+  &__button--chart:focus {
+    background-color: #7b14a7;
+  }
+
+  &__button--chart:focus &__svg--path {
+    fill: #c298d8;
+  }
+
   &__svg {
 
   }
