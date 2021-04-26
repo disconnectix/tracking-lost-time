@@ -4,8 +4,8 @@ import Loader from '../Loader';
 import Error from '../Error';
 import {Calendar} from 'primereact/calendar';
 import PolarArea from './PolarArea';
-import {convertNewDate, request} from "../../utils/utils";
-import {Button} from "primereact/button";
+import {convertNewDate, request} from '../../utils/utils';
+import {Button} from 'primereact/button';
 
 const Charts = () => {
   console.log('render Charts...');
@@ -279,7 +279,18 @@ const Charts = () => {
         />
       </div>
 
-
+      <Button className='p-button-rounded charts__button charts__button--chart'>
+        <svg
+          className='charts__svg'
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="-240 -240 1500 1500"
+        >
+          <path
+            className='charts__svg--path'
+            fill="#000000"
+            d="M437 542c-1.8-3.2-2.4-7-1.7-10.6l76.3-405c1.7-9-4.5-17.6-13.5-18.9-20.8-3.1-42.1-4.8-63.8-4.8C187.6 102.7-11 308.3.5 557.5c10.4 226 196.4 407.9 422.6 413.6 64.3 1.6 125.6-10.7 181-34.3 20.6-8.7 28.8-33.6 18.1-53.3L437 542zm533.8-161.7c-6.3-16.2-25-23.7-40.8-16.3L594.2 523.5c-15.5 7.4-21.6 26.2-13.5 41.2l177.2 326.8c8.3 15.4 28 20.3 42.7 10.8C920.6 825 1000 690.3 1000 537c0-55.3-10.4-108.1-29.2-156.7zM560.6 432L891 275.1c11.8-5.6 16.7-20.1 10.4-31.6C843.7 138 743.4 59 623.7 29.6c-12.7-3.1-25.3 5.3-27.7 18.1l-67.7 359.4c-3.5 18.4 15.4 32.9 32.3 24.9z"/>
+        </svg>
+      </Button>
 
 
       { isLoading && <Loader/> }
@@ -287,14 +298,9 @@ const Charts = () => {
 
       {
         !isLoading && !errorMessage &&
-
-        <div className='card'>
-
-          <PolarArea chartData={resultSetToArray}/>
-
-
-
-        </div>
+          <div className='card'>
+            <PolarArea chartData={resultSetToArray}/>
+          </div>
       }
 
 

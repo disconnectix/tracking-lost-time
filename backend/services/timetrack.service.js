@@ -178,22 +178,20 @@ const getTimetrackIntervalBackend = (req, res) => {
   console.log(dateBegin);
   console.log(dateEnd);
 
-
-  // SELECT * FROM `timetrack` WHERE date >= '20210331' AND date <= '20210401'
-
-  //SELECT * FROM `timetrack` WHERE (date >= '20210403') and (date <= '20210410')
-
   //TODO ::: 2021-04-25 :::
-  //TODO ... dateBegin может быть БОЛЬШЕ dateEnd
-  //TODO ... поэтому необх. учесть такую возможность
-  //TODO ... и отразить в построении запроса sqlQuery
-
+  //... dateBegin может быть БОЛЬШЕ dateEnd
+  //... поэтому необх. учесть такую возможность
+  //... и отразить в построении запроса sqlQuery
 
   const sqlQuery = dateBegin === dateEnd
     ?
     `SELECT * FROM timetrack WHERE date = '${dateBegin}'`
     :
-    `SELECT * FROM timetrack WHERE date >= '${dateBegin}' AND date <= '${dateEnd}'`;
+    dateBegin < dateEnd
+    ?
+    `SELECT * FROM timetrack WHERE date >= '${dateBegin}' AND date <= '${dateEnd}'`
+    :
+    `SELECT * FROM timetrack WHERE date >= '${dateEnd}' AND date <= '${dateBegin}'`;
 
   console.log(sqlQuery);
 
@@ -248,10 +246,7 @@ const getTimetrackIntervalBackend = (req, res) => {
 }
 
 
-
-
 module.exports = { getTimetrackDateBackend, updateTimetrackBackend, getTimetrackIntervalBackend  }
-//module.exports = { getAllWorksBackend, removeWorkBackend, insertWorkBackend, getWorkBackend, updateWorkBackend  }
 
 
 /**
