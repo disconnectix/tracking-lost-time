@@ -67,5 +67,30 @@
 .b-edit:hover {
   background: #9a7cd4;
   color: #151515;
-  border-color: #845fca;}
+  border-color: #845fca;
+}
 
+.btnchart {
+  min-width: 57px;
+  padding: 0 !important;
+
+  &--selected {
+    background-color: #7b14a7;
+  }
+
+  &--selected &__path {
+    fill: #fae567;
+  }
+
+  &__svg {
+
+  }
+
+  &__path {
+    fill: #7b14a7;
+  }
+
+  &:hover &__path {
+    fill: #ffffff;
+  }
+}

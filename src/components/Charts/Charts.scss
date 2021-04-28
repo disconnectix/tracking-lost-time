@@ -22,32 +22,12 @@
   }
 
   &__button {
-    margin: 0.5rem 1rem;
+    margin: 0.5rem 0.5rem;
     min-width: 14rem;
   }
 
-  &__button--chart {
-    min-width: 67px;
-    padding: 0 !important;
-  }
-
-  &__button--chart:focus {
-    background-color: #7b14a7;
-  }
-
-  &__button--chart:focus &__svg--path {
-    fill: #c298d8;
-  }
-
-  &__svg {
-
-  }
-
-  &__svg--path {
-    fill: #7b14a7;
-  }
-
 }
+
 
 .card {
   max-width: 95%;

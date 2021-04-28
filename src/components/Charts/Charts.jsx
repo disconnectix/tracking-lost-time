@@ -3,9 +3,16 @@ import './Charts.scss';
 import Loader from '../Loader';
 import Error from '../Error';
 import {Calendar} from 'primereact/calendar';
-import PolarArea from './PolarArea';
 import {convertNewDate, request} from '../../utils/utils';
 import {Button} from 'primereact/button';
+import {
+  ChartPolarAreaButton,
+  ChartDoughnutButton,
+  ChartBarButton,
+  ChartPieButton,
+  ChartRadarButton
+} from '../Buttons/Buttons.jsx';
+import PolarArea from './PolarArea';
 
 const Charts = () => {
   console.log('render Charts...');
@@ -16,8 +23,8 @@ const Charts = () => {
   const [chartsData, setChartsData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  // const [worksFrontend, setWorksFrontend] = useState([]);
-  // const [changedTimetrack, setChangedTimetrack] = useState([]);
+  const [selectedChart, setSelectedChart] = useState('');
+  const [disabledChartButton, setDisabledChartButton] = useState(true);
 
   let minDate = new Date(2021, 2, 30);
   let maxDate = new Date();
@@ -32,6 +39,8 @@ const Charts = () => {
       console.log(dateBegin);
       console.log('dateEnd       ++++++++++++++++++++');
       console.log(dateEnd);
+
+      setIsLoading(true);
 
       const convertDateBegin = convertNewDate(dateBegin);
       const convertDateEnd = convertNewDate(dateEnd);
@@ -56,14 +65,16 @@ const Charts = () => {
         }
       );
 
-      //ответ от сервера
-      console.log('serverResponse -- /api/timetracks --> ');
-      console.log(serverResponse);
-      setChartsData(serverResponse);
-
       if (!serverResponse) {
         throw Error({message: 'Ответ сервера пуст!'})
       }
+      //ответ от сервера
+      console.log('serverResponse -- /api/timetracks --> ');
+      console.log(serverResponse);
+      setIsLoading(false);
+      setChartsData(serverResponse);
+      setDisabledChartButton(false);
+
     } catch (error) {
       setErrorMessage(`TimeTrack --> fetchUpdateWithDate --> (catch) --> ${error}`);
     }
@@ -81,72 +92,6 @@ const Charts = () => {
 
 
 
-// let _arr = [
-    // {
-    //   "id": 1,
-    //   "date": "20210401",
-    //   "00work": "111111",      "00color": "#ff0000",      "01work": "222222",      "01color": "#00ff00",
-    //   "02work": "333333",      "02color": "#0000ff",      "03work": "444444",      "03color": "#ffff00",
-    //   "04work": "111111",      "04color": "#ff0000",      "05work": "222222",      "05color": "#00ff00",
-    //   "06work": "333333",      "06color": "#0000ff",      "07work": "444444",      "07color": "#ffff00",
-    //   "08work": "111111",      "08color": "#ff0000",      "09work": "222222",      "09color": "#00ff00",
-    //   "10work": "333333",      "10color": "#0000ff",      "11work": "444444",      "11color": "#ffff00",
-    //   "12work": "111111",      "12color": "#ff0000",      "13work": "222222",      "13color": "#00ff00",
-    //   "14work": "333333",      "14color": "#0000ff",      "15work": "444444",      "15color": "#ffff00",
-    //   "16work": "111111",      "16color": "#ff0000",      "17work": "222222",      "17color": "#00ff00",
-    //   "18work": "333333",      "18color": "#0000ff",      "19work": "444444",      "19color": "#ffff00",
-    //   "20work": "111111",      "20color": "#ff0000",      "21work": "222222",      "21color": "#00ff00",
-    //   "22work": "333333",      "22color": "#0000ff",      "23work": "444444",      "23color": "#ffff00"
-    // },
-    // {
-    //   "id": 2,
-    //   "date": "20210402",
-    //   "00work": "555555",      "00color": "#ff00ff",      "01work": "222222",      "01color": "#00ff00",
-    //   "02work": "333333",      "02color": "#0000ff",      "03work": "444444",      "03color": "#ffff00",
-    //   "04work": "555555",      "04color": "#ff00ff",      "05work": "222222",      "05color": "#00ff00",
-    //   "06work": "333333",      "06color": "#0000ff",      "07work": "444444",      "07color": "#ffff00",
-    //   "08work": "555555",      "08color": "#ff00ff",      "09work": "222222",      "09color": "#00ff00",
-    //   "10work": "333333",      "10color": "#0000ff",      "11work": "444444",      "11color": "#ffff00",
-    //   "12work": "555555",      "12color": "#ff00ff",      "13work": "222222",      "13color": "#00ff00",
-    //   "14work": "333333",      "14color": "#0000ff",      "15work": "444444",      "15color": "#ffff00",
-    //   "16work": "555555",      "16color": "#ff00ff",      "17work": "222222",      "17color": "#00ff00",
-    //   "18work": "333333",      "18color": "#0000ff",      "19work": "444444",      "19color": "#ffff00",
-    //   "20work": "555555",      "20color": "#ff00ff",      "21work": "222222",      "21color": "#00ff00",
-    //   "22work": "333333",      "22color": "#0000ff",      "23work": "444444",      "23color": "#ffff00"
-    // },
-  // {
-  //   "id": 4,
-  //   "date": "20210402",
-  //   "00work": "game", "00color": "#fa661b", "01work": "unknow", "01color": "#000000",
-  //   "02work": "cod020202", "02color": "#ff0000", "03work": "eat030303", "03color": "#00ff00",
-  //   "04work": "unknow", "04color": "#000000", "05work": "unknow", "05color": "#000000",
-  //   "06work": "unknow", "06color": "#000000", "07work": "unknow", "07color": "#000000",
-  //   "08work": "unknow", "08color": "#000000", "09work": "unknow", "09color": "#000000",
-  //   "10work": "unknow", "10color": "#000000", "11work": "unknow", "11color": "#000000",
-  //   "12work": "unknow", "12color": "#000000", "13work": "unknow", "13color": "#000000",
-  //   "14work": "unknow", "14color": "#000000", "15work": "unknow", "15color": "#000000",
-  //   "16work": "unknow", "16color": "#000000", "17work": "unknow", "17color": "#000000",
-  //   "18work": "unknow", "18color": "#000000", "19work": "unknow", "19color": "#000000",
-  //   "20work": "unknow", "20color": "#000000", "21work": "unknow", "21color": "#000000",
-  //   "22work": "unknow", "22color": "#000000", "23work": "unknow", "23color": "#000000"
-  // },
-  //   {
-  //     "id": 5,
-  //     "date": "20210403",
-  //     "00work": "game",      "00color": "#fa661b",    "01work": "unknow",      "01color": "#000000",
-  //     "02work": "cod020202",      "02color": "#ff0000",      "03work": "eat030303",      "03color": "#00ff00",
-  //     "04work": "unknow",      "04color": "#000000",      "05work": "unknow",      "05color": "#000000",
-  //     "06work": "unknow",      "06color": "#000000",      "07work": "unknow",      "07color": "#000000",
-  //     "08work": "unknow",      "08color": "#000000",      "09work": "unknow",      "09color": "#000000",
-  //     "10work": "unknow",      "10color": "#000000",      "11work": "unknow",      "11color": "#000000",
-  //     "12work": "unknow",      "12color": "#000000",      "13work": "unknow",      "13color": "#000000",
-  //     "14work": "unknow",      "14color": "#000000",      "15work": "unknow",      "15color": "#000000",
-  //     "16work": "unknow",      "16color": "#000000",      "17work": "unknow",      "17color": "#000000",
-  //     "18work": "unknow",      "18color": "#000000",      "19work": "unknow",      "19color": "#000000",
-  //     "20work": "unknow",      "20color": "#000000",      "21work": "unknow",      "21color": "#000000",
-  //     "22work": "unknow",      "22color": "#000000",      "23work": "unknow",      "23color": "#000000"
-  //   }
-  // ];
 
 
   for (const elem of chartsData) {
@@ -240,6 +185,12 @@ const Charts = () => {
     console.log(e.target.value);
   }
 
+  const onChartButtonsHandler = (typeChart) => {
+    return () => {
+      setSelectedChart(typeChart)
+    }
+  }
+
 
   return (
     <section className='charts'>
@@ -279,40 +230,38 @@ const Charts = () => {
         />
       </div>
 
+      <div className='charts__buttons'>
+        <ChartPieButton
+          selected={selectedChart === 'pie'}
+          onClickHandler={onChartButtonsHandler('pie')}
+          disabledChartButton={disabledChartButton}
+        />
 
+        <ChartDoughnutButton
+          selected={selectedChart === 'doughnut'}
+          onClickHandler={onChartButtonsHandler('doughnut')}
+          disabledChartButton={disabledChartButton}
+        />
 
+        <ChartBarButton
+          selected={selectedChart === 'bar'}
+          onClickHandler={onChartButtonsHandler('bar')}
+          disabledChartButton={disabledChartButton}
+        />
 
+        <ChartPolarAreaButton
+          selected={selectedChart === 'polarArea'}
+          onClickHandler={onChartButtonsHandler('polarArea')}
+          disabledChartButton={disabledChartButton}
+        />
 
+        <ChartRadarButton
+          selected={selectedChart === 'radar'}
+          onClickHandler={onChartButtonsHandler('radar')}
+          disabledChartButton={disabledChartButton}
+        />
 
-      <Button className='p-button-rounded charts__button charts__button--chart'>
-        <svg
-          className='charts__svg'
-          xmlns='http://www.w3.org/2000/svg'
-          viewBox='-240 -240 1500 1500'
-        >
-          <path
-            className='charts__svg--path'
-            fill='#000000'
-            d='M437 542c-1.8-3.2-2.4-7-1.7-10.6l76.3-405c1.7-9-4.5-17.6-13.5-18.9-20.8-3.1-42.1-4.8-63.8-4.8C187.6 102.7-11 308.3.5 557.5c10.4 226 196.4 407.9 422.6 413.6 64.3 1.6 125.6-10.7 181-34.3 20.6-8.7 28.8-33.6 18.1-53.3L437 542zm533.8-161.7c-6.3-16.2-25-23.7-40.8-16.3L594.2 523.5c-15.5 7.4-21.6 26.2-13.5 41.2l177.2 326.8c8.3 15.4 28 20.3 42.7 10.8C920.6 825 1000 690.3 1000 537c0-55.3-10.4-108.1-29.2-156.7zM560.6 432L891 275.1c11.8-5.6 16.7-20.1 10.4-31.6C843.7 138 743.4 59 623.7 29.6c-12.7-3.1-25.3 5.3-27.7 18.1l-67.7 359.4c-3.5 18.4 15.4 32.9 32.3 24.9z'/>
-        </svg>
-      </Button>
-
-      <Button className='p-button-rounded charts__button charts__button--chart'>
-        <svg
-          className='charts__svg'
-          xmlns='http://www.w3.org/2000/svg'
-          viewBox='-240 -240 1500 1500'
-        >
-          <path
-            className='charts__svg--path'
-            fill='#000000'
-            d="M342.1 690.9c-3-1.8-5.6-4.4-8.2-6.8-67.9-62.4-96.9-139.4-80.7-230.3 18.5-104 99.5-182 203.7-199.6 9.1-1.5 9.8-5 9.8-12.3-.2-80.5-.1-160.9-.1-241.4h-9.7c-16.5 2.6-33.2 4.3-49.6 7.9-199.4 43-329.6 162-390.4 356.6-1.8 5.6-3.3 11.3-4.8 16.9-4.9 20.5-24.3 113.9-.6 227.4C40.2 734 108.6 833.6 214.9 909.4c5.5 3.9 7.9 3.7 11.5-2.4 39.1-68.3 78.4-136.5 117.9-204.5 3.1-5.3 3.2-8.3-2.2-11.6zM949 281.7c-2.9-6.1-5.1-7.1-11.2-3.5-67.6 40.3-135.3 80.4-203.1 120.4-5.3 3.1-6.8 5.8-3.8 11.2 1.7 3.1 2.7 6.6 3.8 10 28.5 87.7 16.1 169-42.6 240.3-67.1 81.6-176 109.8-275.4 74-8.6-3.1-11-.5-14.6 5.9-39.3 70.2-78.8 140.3-118.3 210.4l8.5 4.8c15.7 5.9 31.1 12.5 47.1 17.5 194.8 60.3 366.6 20.4 515-119.3 4.3-4 8.4-8.2 12.5-12.4 14.4-15.6 77.1-87.5 112.1-198 36.1-122.8 25.4-243.1-30-361.3zm-413.5-27.9c62.4 9.9 113.9 39.3 154 88.2 4.5 5.5 7.5 6 13.4 2.5 67.5-39.2 135.1-78.3 202.8-117 7.3-4.2 6.6-7.2 2.4-13-20.3-28.7-42.9-55.4-68.6-79.3C768.3 68.7 685 26.2 589.1 8.4c-16.8-3.1-33.7-5.3-50.6-7.9h-9.7v243.3c0 4.9-.7 8.8 6.7 10z"
-          />
-        </svg>
-      </Button>
-
-
-
+      </div>
 
 
 
@@ -323,9 +272,13 @@ const Charts = () => {
 
       {
         !isLoading && !errorMessage &&
-          <div className='card'>
-            <PolarArea chartData={resultSetToArray}/>
-          </div>
+        <div className='card'>
+          {selectedChart === 'polarArea' && <p>PolarArea</p>}
+          {selectedChart === 'doughnut' && <p>Doughnut</p>}
+          {selectedChart === 'bar' && <p>Bar</p>}
+          {selectedChart === 'pie' && <p>Pie</p>}
+          {selectedChart === 'radar' && <p>Radar</p>}
+        </div>
       }
 
 
@@ -339,6 +292,77 @@ export default Charts;
 
 /**
  *
+ *
+ <PolarArea chartData={resultSetToArray}/>
+ *
+ * let _arr = [
+    // {
+    //   "id": 1,
+    //   "date": "20210401",
+    //   "00work": "111111",      "00color": "#ff0000",      "01work": "222222",      "01color": "#00ff00",
+    //   "02work": "333333",      "02color": "#0000ff",      "03work": "444444",      "03color": "#ffff00",
+    //   "04work": "111111",      "04color": "#ff0000",      "05work": "222222",      "05color": "#00ff00",
+    //   "06work": "333333",      "06color": "#0000ff",      "07work": "444444",      "07color": "#ffff00",
+    //   "08work": "111111",      "08color": "#ff0000",      "09work": "222222",      "09color": "#00ff00",
+    //   "10work": "333333",      "10color": "#0000ff",      "11work": "444444",      "11color": "#ffff00",
+    //   "12work": "111111",      "12color": "#ff0000",      "13work": "222222",      "13color": "#00ff00",
+    //   "14work": "333333",      "14color": "#0000ff",      "15work": "444444",      "15color": "#ffff00",
+    //   "16work": "111111",      "16color": "#ff0000",      "17work": "222222",      "17color": "#00ff00",
+    //   "18work": "333333",      "18color": "#0000ff",      "19work": "444444",      "19color": "#ffff00",
+    //   "20work": "111111",      "20color": "#ff0000",      "21work": "222222",      "21color": "#00ff00",
+    //   "22work": "333333",      "22color": "#0000ff",      "23work": "444444",      "23color": "#ffff00"
+    // },
+    // {
+    //   "id": 2,
+    //   "date": "20210402",
+    //   "00work": "555555",      "00color": "#ff00ff",      "01work": "222222",      "01color": "#00ff00",
+    //   "02work": "333333",      "02color": "#0000ff",      "03work": "444444",      "03color": "#ffff00",
+    //   "04work": "555555",      "04color": "#ff00ff",      "05work": "222222",      "05color": "#00ff00",
+    //   "06work": "333333",      "06color": "#0000ff",      "07work": "444444",      "07color": "#ffff00",
+    //   "08work": "555555",      "08color": "#ff00ff",      "09work": "222222",      "09color": "#00ff00",
+    //   "10work": "333333",      "10color": "#0000ff",      "11work": "444444",      "11color": "#ffff00",
+    //   "12work": "555555",      "12color": "#ff00ff",      "13work": "222222",      "13color": "#00ff00",
+    //   "14work": "333333",      "14color": "#0000ff",      "15work": "444444",      "15color": "#ffff00",
+    //   "16work": "555555",      "16color": "#ff00ff",      "17work": "222222",      "17color": "#00ff00",
+    //   "18work": "333333",      "18color": "#0000ff",      "19work": "444444",      "19color": "#ffff00",
+    //   "20work": "555555",      "20color": "#ff00ff",      "21work": "222222",      "21color": "#00ff00",
+    //   "22work": "333333",      "22color": "#0000ff",      "23work": "444444",      "23color": "#ffff00"
+    // },
+  // {
+  //   "id": 4,
+  //   "date": "20210402",
+  //   "00work": "game", "00color": "#fa661b", "01work": "unknow", "01color": "#000000",
+  //   "02work": "cod020202", "02color": "#ff0000", "03work": "eat030303", "03color": "#00ff00",
+  //   "04work": "unknow", "04color": "#000000", "05work": "unknow", "05color": "#000000",
+  //   "06work": "unknow", "06color": "#000000", "07work": "unknow", "07color": "#000000",
+  //   "08work": "unknow", "08color": "#000000", "09work": "unknow", "09color": "#000000",
+  //   "10work": "unknow", "10color": "#000000", "11work": "unknow", "11color": "#000000",
+  //   "12work": "unknow", "12color": "#000000", "13work": "unknow", "13color": "#000000",
+  //   "14work": "unknow", "14color": "#000000", "15work": "unknow", "15color": "#000000",
+  //   "16work": "unknow", "16color": "#000000", "17work": "unknow", "17color": "#000000",
+  //   "18work": "unknow", "18color": "#000000", "19work": "unknow", "19color": "#000000",
+  //   "20work": "unknow", "20color": "#000000", "21work": "unknow", "21color": "#000000",
+  //   "22work": "unknow", "22color": "#000000", "23work": "unknow", "23color": "#000000"
+  // },
+  //   {
+  //     "id": 5,
+  //     "date": "20210403",
+  //     "00work": "game",      "00color": "#fa661b",    "01work": "unknow",      "01color": "#000000",
+  //     "02work": "cod020202",      "02color": "#ff0000",      "03work": "eat030303",      "03color": "#00ff00",
+  //     "04work": "unknow",      "04color": "#000000",      "05work": "unknow",      "05color": "#000000",
+  //     "06work": "unknow",      "06color": "#000000",      "07work": "unknow",      "07color": "#000000",
+  //     "08work": "unknow",      "08color": "#000000",      "09work": "unknow",      "09color": "#000000",
+  //     "10work": "unknow",      "10color": "#000000",      "11work": "unknow",      "11color": "#000000",
+  //     "12work": "unknow",      "12color": "#000000",      "13work": "unknow",      "13color": "#000000",
+  //     "14work": "unknow",      "14color": "#000000",      "15work": "unknow",      "15color": "#000000",
+  //     "16work": "unknow",      "16color": "#000000",      "17work": "unknow",      "17color": "#000000",
+  //     "18work": "unknow",      "18color": "#000000",      "19work": "unknow",      "19color": "#000000",
+  //     "20work": "unknow",      "20color": "#000000",      "21work": "unknow",      "21color": "#000000",
+  //     "22work": "unknow",      "22color": "#000000",      "23work": "unknow",      "23color": "#000000"
+  //   }
+  // ];
+
+*
  * {
     "dateBegin":"20210331",
     "dateEnd":"20210402"
