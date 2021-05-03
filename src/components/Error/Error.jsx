@@ -13,13 +13,3 @@ const Error = ({message}) => {
 }
 
 export default Error;
-
-
-/***
- * Если передать пропсами объект с ошибкой...
- *
- Object.entries(obj).forEach(([key, value]) => {
-  console.log(`${key} ${value}`); // "a 5", "b 7", "c 9"
-});
-
- */

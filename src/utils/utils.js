@@ -35,3 +35,74 @@ export const convertNewDate = (newDate) => {
   let _dateD = day < 10 ? '0' + day : '' + day;
   return _dateY + _dateM + _dateD;
 }
+
+export const convertServerResponse = (chartsData) => {
+  let resultSetToArray = [];
+
+  for (const elem of chartsData) {
+    delete elem.id;
+    delete elem.date;
+  }
+
+  console.log('chartsData ::: =======================');
+  console.log(chartsData);
+  console.log('------------------------------------------------------------- Цикл ***');
+
+  let _tempArray = [];
+  let _tempSet = new Set();
+
+  for (const elem of chartsData) {
+
+    let _elemArr = Object.entries(elem);
+    console.log('Object.entries(elem)');
+    console.log(Object.entries(elem));
+
+    for (let i = 0; i < _elemArr.length - 1; i++) {
+      let _tempArr = [];
+      if (_elemArr[i][0].slice(0,2) === _elemArr[i+1][0].slice(0,2)
+        && _elemArr[i][0].slice(2) === 'work'
+        && _elemArr[i+1][0].slice(2) === 'color') {
+        _tempArr.push(_elemArr[i][1]);
+        _tempArr.push(_elemArr[i+1][1]);
+        // console.log(`${_elemArr[i][1]} -- ${_elemArr[i+1][1]}`);
+        console.log(_tempArr);
+        _tempArray.push(_tempArr);
+        _tempSet.add(JSON.stringify(_tempArr));
+      }
+    }
+  }
+
+  console.log('_tempArray');
+  console.log(_tempArray);
+  console.log('_tempSet');
+  console.log(_tempSet);
+  console.log('------------------------------------------------------------- ***');
+
+  _tempSet.forEach((elem, key, _tempSet) => {
+    resultSetToArray.push(JSON.parse(elem))
+  })
+
+  console.log('resultSetToArray');
+  console.log(resultSetToArray);
+
+  for (const elem of resultSetToArray) {
+    elem.push(0);
+  }
+
+  console.log('resultSetToArray + 0');
+  console.log(resultSetToArray);
+
+  for (const elemA of _tempArray) {
+    for (const elemS of resultSetToArray) {
+      if (elemA[0] === elemS[0] && elemA[1] === elemS[1]) {
+        elemS[2] += 1;
+      }
+    }
+  }
+
+  console.log('resultSetToArray + number');
+  console.log(resultSetToArray)
+
+  return resultSetToArray;
+}
+

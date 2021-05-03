@@ -3,7 +3,7 @@ import './Charts.scss';
 import Loader from '../Loader';
 import Error from '../Error';
 import {Calendar} from 'primereact/calendar';
-import {convertNewDate, request} from '../../utils/utils';
+import {convertNewDate, convertServerResponse, request} from '../../utils/utils';
 import {Button} from 'primereact/button';
 import {
   ChartPolarAreaButton,
@@ -13,6 +13,10 @@ import {
   ChartRadarButton
 } from '../Buttons/Buttons.jsx';
 import PolarArea from './PolarArea';
+import PieChart from './Pie';
+import DoughnutChart from './Doughnut';
+import BarChart from './Bar';
+import RadarChart from './Radar';
 
 const Charts = () => {
   console.log('render Charts...');
@@ -23,7 +27,7 @@ const Charts = () => {
   const [chartsData, setChartsData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [selectedChart, setSelectedChart] = useState('');
+  const [selectedChart, setSelectedChart] = useState('pie');
   const [disabledChartButton, setDisabledChartButton] = useState(true);
 
   let minDate = new Date(2021, 2, 30);
@@ -41,6 +45,7 @@ const Charts = () => {
       console.log(dateEnd);
 
       setIsLoading(true);
+      setErrorMessage('');
 
       const convertDateBegin = convertNewDate(dateBegin);
       const convertDateEnd = convertNewDate(dateEnd);
@@ -59,107 +64,37 @@ const Charts = () => {
       const serverResponse = await request(
         `/api/timetracks`,
         'POST',
-        // 'UPDATE'
         {
           ...requestDates
         }
       );
 
-      if (!serverResponse) {
-        throw Error({message: 'Ответ сервера пуст!'})
-      }
       //ответ от сервера
-      console.log('serverResponse -- /api/timetracks --> ');
+      if (!serverResponse) {
+        setErrorMessage(`Charts --> fetchCharts --> Ответ сервера пуст!`);
+      }
+      console.log('serverResponse -- Charts --> fetchCharts -- /api/timetracks --> ');
       console.log(serverResponse);
-      setIsLoading(false);
-      setChartsData(serverResponse);
-      setDisabledChartButton(false);
 
+      //если ответ от сервера === объект с ошибкой
+      if (!Array.isArray(serverResponse)) {
+        setErrorMessage(serverResponse.message);
+        console.log('serverResponse.message  ***********   ************   ************');
+        console.log(serverResponse.message);
+      } else {
+        setChartsData(serverResponse);
+        setDisabledChartButton(false);
+      }
+
+      setIsLoading(false);
     } catch (error) {
-      setErrorMessage(`TimeTrack --> fetchUpdateWithDate --> (catch) --> ${error}`);
+      setErrorMessage(`Charts --> fetchCharts --> (catch) --> ${error}`);
     }
   };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  for (const elem of chartsData) {
-    delete elem.id;
-    delete elem.date;
-  }
-
-  console.log('chartsData ::: =======================');
-  console.log(chartsData);
-
-  console.log('------------------------------------------------------------- Цикл ***');
-
-  let _tempArray = [];
-  let _tempSet = new Set();
-
-  for (const elem of chartsData) {
-
-    let _elemArr = Object.entries(elem);
-    console.log('Object.entries(elem)');
-    console.log(Object.entries(elem));
-
-    for (let i = 0; i < _elemArr.length - 1; i++) {
-      let _tempArr = [];
-      if (_elemArr[i][0].slice(0,2) === _elemArr[i+1][0].slice(0,2)
-        && _elemArr[i][0].slice(2) === 'work'
-        && _elemArr[i+1][0].slice(2) === 'color') {
-        _tempArr.push(_elemArr[i][1]);
-        _tempArr.push(_elemArr[i+1][1]);
-        // console.log(`${_elemArr[i][1]} -- ${_elemArr[i+1][1]}`);
-        console.log(_tempArr);
-        _tempArray.push(_tempArr);
-        _tempSet.add(JSON.stringify(_tempArr));
-      }
-    }
-  }
-
-  console.log('_tempArray');
-  console.log(_tempArray);
-  console.log('_tempSet');
-  console.log(_tempSet);
-
-  console.log('------------------------------------------------------------- ***');
-
-  let resultSetToArray = [];
-  _tempSet.forEach((elem, key, _tempSet) => {
-    resultSetToArray.push(JSON.parse(elem))
-  })
-
-  console.log('resultSetToArray');
-  console.log([...resultSetToArray]);
-
-  for (const elem of resultSetToArray) {
-    elem.push(0);
-  }
-
-  console.log('resultSetToArray + 0');
-  console.log([...resultSetToArray]);
-
-  for (const elemA of _tempArray) {
-    for (const elemS of resultSetToArray) {
-      if (elemA[0] === elemS[0] && elemA[1] === elemS[1]) {
-        elemS[2] += 1;
-      }
-    }
-  }
-
-  console.log('resultSetToArray + number');
-  console.log([...resultSetToArray]);
+console.log('chartsData --- chartsData --- chartsData --------------------');
+console.log(chartsData);
+const resultSetToArray = chartsData.length === 0 ? [] : convertServerResponse(chartsData);
 
   //TODO :::
   //... реализовать цикл
@@ -273,11 +208,12 @@ const Charts = () => {
       {
         !isLoading && !errorMessage &&
         <div className='card'>
-          {selectedChart === 'polarArea' && <p>PolarArea</p>}
-          {selectedChart === 'doughnut' && <p>Doughnut</p>}
-          {selectedChart === 'bar' && <p>Bar</p>}
-          {selectedChart === 'pie' && <p>Pie</p>}
-          {selectedChart === 'radar' && <p>Radar</p>}
+
+          {selectedChart === 'pie' && <PieChart chartData={resultSetToArray}/>}
+          {selectedChart === 'doughnut' && <DoughnutChart chartData={resultSetToArray}/>}
+          {selectedChart === 'bar' && <BarChart chartData={resultSetToArray}/>}
+          {selectedChart === 'polarArea' && <PolarArea chartData={resultSetToArray}/>}
+          {selectedChart === 'radar' && <RadarChart chartData={resultSetToArray}/>}
         </div>
       }
 
