@@ -1,6 +1,5 @@
 .charts {
 
-
   &__title {
     text-align: center;
   }
@@ -28,10 +27,11 @@
 
 }
 
-
 .card {
-  max-width: 95%;
+  max-width: 50%;
   background-color: inherit;
+  border: none;
+  margin: 0 auto;
 }
 
 .p-field {

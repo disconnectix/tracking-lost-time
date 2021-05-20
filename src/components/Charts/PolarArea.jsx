@@ -1,12 +1,14 @@
 import React from 'react';
 import { Polar } from 'react-chartjs-2';
+import LabelsListShow from '../LabelsListShow/LabelsListShow.jsx';
+import './PolarArea.scss';
 
 const PolarArea = ({chartData}) => {
 
   console.log('chartData --- PolarArea -----------------------------------');
   console.log(chartData);
 
-  let labels = [];
+  // let labels = [];
   let datasetsColor = [];
   let datasetsData = [];
 
@@ -16,7 +18,6 @@ const PolarArea = ({chartData}) => {
   // 3: (3) ["444444", "#ffff00", 6]
 
   chartData.forEach( chart => {
-    labels.push(chart[0]);
     datasetsColor.push(chart[1]);
     datasetsData.push(chart[2])
   })
@@ -34,11 +35,14 @@ const PolarArea = ({chartData}) => {
         hoverBorderColor: '#fff',
       },
     ],
-    labels: labels,
+    labels: [],
   }
 
   return (
-    <Polar data={data} />
+    <>
+      <Polar data={data} />
+      <LabelsListShow chartData={chartData}/>
+    </>
   )
 }
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import {Radar} from 'react-chartjs-2';
+import LabelsListShow from '../LabelsListShow/LabelsListShow.jsx';
 
 const RadarChart = ({chartData}) => {
 
@@ -10,8 +11,8 @@ const RadarChart = ({chartData}) => {
   let datasetsColor = [];
   let datasetsData = [];
 
-  chartData.forEach( chart => {
-    labels.push(chart[0]);
+  chartData.forEach( (chart, index) => {
+    labels.push(index + 1);
     datasetsColor.push(chart[1]);
     datasetsData.push(chart[2])
   })
@@ -41,8 +42,15 @@ const RadarChart = ({chartData}) => {
   };
 
   return (
-    <Radar data={data} options={options}/>
-  )
+    <>
+      <Radar
+        data={data}
+        options={options}
+      />
+      <LabelsListShow chartData={chartData}/>
+    </>
+
+)
 }
 
 export default RadarChart;

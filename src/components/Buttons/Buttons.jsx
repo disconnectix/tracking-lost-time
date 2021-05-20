@@ -16,17 +16,6 @@ export const ChartsButton = () => {
   )
 }
 
-export const InsertButton = () => {
-  return (
-    <button
-      title='Add new work...'
-      className='b-insert'
-    >
-      <span>+</span>
-    </button>
-  )
-}
-
 export const DeleteButton = ({ controlHandler }) => {
   return (
     <button

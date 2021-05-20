@@ -1,5 +1,6 @@
 import React from 'react';
 import {Bar} from 'react-chartjs-2';
+import LabelsListShow from '../LabelsListShow/LabelsListShow.jsx';
 
 const BarChart = ({chartData}) => {
 
@@ -10,8 +11,8 @@ const BarChart = ({chartData}) => {
   let datasetsColor = [];
   let datasetsData = [];
 
-  chartData.forEach( chart => {
-    labels.push(chart[0]);
+  chartData.forEach( (chart, index) => {
+    labels.push(index + 1);
     datasetsColor.push(chart[1]);
     datasetsData.push(chart[2])
   })
@@ -41,8 +42,14 @@ const BarChart = ({chartData}) => {
   };
 
   return (
-    <Bar data={data} options={options}/>
-  )
+    <>
+      <Bar
+        data={data}
+        options={options}
+      />
+      <LabelsListShow chartData={chartData}/>
+    </>
+)
 }
 
 export default BarChart;

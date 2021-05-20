@@ -15,15 +15,15 @@
 
   &__item {
     display: flex;
-    //justify-content: space-between;
-    font-size: calc(16px + 0.5vmin);;
-    //margin: 1vmin 0;
+    font-size: calc(16px + 0.5vmin);
     border: 1px solid #b2b2b2;
-    padding: 10px 0;
+    padding: 5px 0;
     border-radius: 4px;
-    background-color: lightgrey;
+    background-color: #2a323d;
     transition: all 500ms linear;
     list-style: none;
+    color: darkgray;
+    margin-bottom: 0.5rem;
   }
 
   &__info {
@@ -39,6 +39,7 @@
     margin: 0 1vmin;
     height: 40px;
     border-radius: 4px;
+    border: 2px solid darkgrey;
   }
 
   &__work {
@@ -69,6 +70,11 @@
   }
 
 
+}
+
+.p-button.p-button-lg {
+  font-size: calc(16px + 0.6vw);
+  padding: 0.3rem 0.5rem;
 }
 
 @media only screen and (max-width: 991px) {

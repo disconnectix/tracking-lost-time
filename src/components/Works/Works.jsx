@@ -6,7 +6,8 @@ import Loader from '../Loader';
 import Error from '../Error';
 import DataIsEmpty from '../DataIsEmpty';
 import { request } from '../../utils/utils';
-import { DeleteButton, EditButton, InsertButton } from '../Buttons/Buttons';
+import { DeleteButton, EditButton } from '../Buttons/Buttons';
+import {Button} from 'primereact/button';
 
 //TODO :::
 //1) переместить функцию request в utils.js
@@ -98,7 +99,14 @@ const Works = () => {
       <div className='works__header'>
         <h1 className='works__title'>Works</h1>
         <NavLink exact={true} to={`/work/insert`}>
-          <InsertButton/>
+          <Button
+            className='p-button-lg p-button-danger'
+            label='Add work'
+            icon='pi pi-plus'
+            disabled={false}
+          />
+
+          {/*<InsertButton/>*/}
         </NavLink>
       </div>
 

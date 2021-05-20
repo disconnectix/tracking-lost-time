@@ -1,17 +1,16 @@
 import React from 'react';
 import {Pie} from 'react-chartjs-2';
+import LabelsListShow from '../LabelsListShow/LabelsListShow.jsx';
 
 const PieChart = ({chartData}) => {
 
   console.log('chartData --- Pie -----------------------------------');
   console.log(chartData);
 
-  let labels = [];
   let datasetsColor = [];
   let datasetsData = [];
 
   chartData.forEach( chart => {
-    labels.push(chart[0]);
     datasetsColor.push(chart[1]);
     datasetsData.push(chart[2])
   })
@@ -25,12 +24,15 @@ const PieChart = ({chartData}) => {
         hoverBorderColor: '#fff',
       },
     ],
-    labels: labels,
+    labels: [],
   }
 
   return (
-    <Pie data={data} />
-  )
+    <>
+      <Pie data={data} />
+      <LabelsListShow chartData={chartData}/>
+    </>
+)
 }
 
 export default PieChart;
